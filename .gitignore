@@ -1,0 +1,8 @@
+# Graph cli generated
+src/types
+build/
+.DS_STORE
+node_modules
+
+*.txt
+*.swp

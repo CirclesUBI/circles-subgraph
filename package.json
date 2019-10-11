@@ -1,0 +1,25 @@
+{
+  "name": "circles-subgraph",
+  "version": "1.0.0",
+  "description": "Circles UBI subgraph for The Graph",
+  "scripts": {
+    "build": "graph build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CirclesUBI/circles-subgraph.git"
+  },
+  "contributors": [
+    "ana0"
+  ],
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
+  },
+  "devDependencies": {
+    "truffle": "^5.0.40"
+  },
+  "dependencies": {
+    "circles-contracts": "^1.0.5"
+  }
+}
