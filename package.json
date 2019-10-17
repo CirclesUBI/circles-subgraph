@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
+    "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build"
   },
   "repository": {

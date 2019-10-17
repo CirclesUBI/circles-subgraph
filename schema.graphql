@@ -1,0 +1,43 @@
+type Hub @entity {
+  id: ID!               # The namehash of the name
+  # owner: String         # The human readable label name (imported from CSV), if known
+  # labelhash: Bytes      # keccak256(labelName)
+  # parent: Domain        # The namehash (id) of the parent name
+  # subdomains: [Domain!]! @derivedFrom(field: "parent")  # Can count domains from length of array
+  owner: Account!
+}
+
+type Token @entity {
+  id: ID!               # The namehash of the name
+  # owner: String         # The human readable label name (imported from CSV), if known
+  # labelhash: Bytes      # keccak256(labelName)
+  # parent: Domain        # The namehash (id) of the parent name
+  # subdomains: [Domain!]! @derivedFrom(field: "parent")  # Can count domains from length of array
+  owner: Account!
+  # resolver: Resolver
+  # ttl: BigInt
+}
+
+type Account @entity {
+  id: ID!
+  trusts: [Account!] #! @derivedFrom(field: "owner")
+  isTrustedBy: [Account!]
+  balances: [Balance!]
+}
+
+type Balance @entity {
+  id: ID!
+  amount: BigInt
+}
+
+interface Event {
+  id: ID!                   # Concatenation of block number and log ID
+  node: Bytes!
+}
+
+type Signup implements Event @entity {
+  id: ID!
+  node: Bytes!
+  address: String!
+  token: Token!
+}
