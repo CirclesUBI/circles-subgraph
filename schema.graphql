@@ -20,7 +20,7 @@ type Token @entity {
 
 type Account @entity {
   id: ID!
-  trusts: [Account!] #! @derivedFrom(field: "owner")
+  trusts: [Account!]
   isTrustedBy: [Account!]
   balances: [Balance!]
 }
@@ -32,12 +32,10 @@ type Balance @entity {
 
 interface Event {
   id: ID!                   # Concatenation of block number and log ID
-  node: Bytes!
 }
 
 type Signup implements Event @entity {
   id: ID!
-  node: Bytes!
-  address: String!
-  token: Token!
+  accountID: String!
+  tokenID: Token!
 }

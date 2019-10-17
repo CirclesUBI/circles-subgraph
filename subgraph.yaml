@@ -1,4 +1,4 @@
-specVersion: 0.0.3
+specVersion: 0.0.1
 description: A secure & decentralized way to address resources on and off the blockchain using simple, human-readable names. Access domains and transfer history.
 repository: https://github.com/CirclesUBI/circles-subgraph/
 schema:
@@ -6,13 +6,13 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Hub
-#    network: mainnet
+    network: ganache
     source:
       address: '0xCfEB869F69431e42cdB54A4F4f105C19C080A601'
       abi: Hub
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.3
       language: wasm/assemblyscript
       file: ./src/hub.ts
       entities:
