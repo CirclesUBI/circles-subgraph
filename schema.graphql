@@ -37,5 +37,5 @@ interface Event {
 type Signup implements Event @entity {
   id: ID!
   accountID: String!
-  tokenID: Token!
+  tokenID: String!
 }
