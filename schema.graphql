@@ -1,27 +1,23 @@
 type Hub @entity {
   id: ID!               # The namehash of the name
-  # owner: String         # The human readable label name (imported from CSV), if known
-  # labelhash: Bytes      # keccak256(labelName)
-  # parent: Domain        # The namehash (id) of the parent name
-  # subdomains: [Domain!]! @derivedFrom(field: "parent")  # Can count domains from length of array
-  owner: Account!
+  owner: Safe!
 }
 
 type Token @entity {
   id: ID!               # The namehash of the name
-  # owner: String         # The human readable label name (imported from CSV), if known
-  # labelhash: Bytes      # keccak256(labelName)
-  # parent: Domain        # The namehash (id) of the parent name
-  # subdomains: [Domain!]! @derivedFrom(field: "parent")  # Can count domains from length of array
-  owner: Account!
-  # resolver: Resolver
-  # ttl: BigInt
+  owner: Safe!
 }
 
-type Account @entity {
+type User @entity {
   id: ID!
-  trusts: [Account!]
-  isTrustedBy: [Account!]
+  safe: Safe!
+}
+
+type Safe @entity {
+  id: ID!
+  owners: [User!]! @derivedFrom(field: "safe")
+  trusts: [Trust!]! @derivedFrom(field: "from")
+  isTrustedBy: [Trust!]! @derivedFrom(field: "to")
   balances: [Balance!]
 }
 
@@ -36,6 +32,17 @@ interface Event {
 
 type Signup implements Event @entity {
   id: ID!
-  accountID: String!
-  tokenID: String!
+  safe: String!
+  token: String!
+}
+
+type Trust implements Event @entity {
+  id: ID!
+  from: Safe!
+  to: Safe!
+  limit: BigInt!
+}
+
+type ProxyCreation implements Event @entity {
+  id: ID!
 }
