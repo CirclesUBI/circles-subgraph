@@ -6,8 +6,6 @@ import {
 import {
   Trust,
   Signup,
-  Safe,
-  User,
   Token
 } from './types/schema'
 
@@ -24,7 +22,7 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
-  let trustEvent = new Signup(createEventID(event.block.number, event.logIndex))
+  let trustEvent = new Trust(createEventID(event.block.number, event.logIndex))
   trustEvent.from = event.params.from.toHex()
   trustEvent.to = event.params.to.toHex()
   trustEvent.limit = event.params.limit
