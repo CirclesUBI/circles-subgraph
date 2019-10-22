@@ -8,7 +8,7 @@ dataSources:
     name: Hub
     network: ganache
     source:
-      address: '0x70Dc2b623E291fF12D658733e15DcCf355B5A993'
+      address: '0x26A3D107756d162f052a99e02c6b8CC3Ef06797A'
       abi: Hub
     mapping:
       kind: ethereum/events
@@ -31,7 +31,7 @@ dataSources:
     name: ProxyFactory
     network: ganache
     source:
-      address: '0x0c67d45134396649E50E8874bd12ab32Fa95Eb9F'
+      address: '0x26B7ccEeD020739e311D19557F3794d65E3042C6'
       abi: ProxyFactory
     mapping:
       kind: ethereum/events
@@ -47,3 +47,25 @@ dataSources:
       eventHandlers:
         - event: ProxyCreation(address)
           handler: handleProxyCreation
+      callHandlers:
+        - function: createProxy(address,bytes)
+          handler: handleCreateProxyCall
+    templates:
+      - name: GnosisSafe
+        kind: ethereum/contract
+        network: ganache
+        source:
+          abi: GnosisSafe
+        mapping:
+          kind: ethereum/events
+          apiVersion: 0.0.1
+          language: wasm/assemblyscript
+          file: ./src/gnosisSafe.ts
+          entities:
+            - Safe
+          abis:
+            - name: GnosisSafe
+              file: ./node_modules/@gnosis.pm/safe-contracts/build/contracts/GnosisSafe.json
+          eventHandlers:
+            - event: AddedOwner(address)
+              handler: handleAddedOwner

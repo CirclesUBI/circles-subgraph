@@ -27,7 +27,7 @@ type Balance @entity {
 }
 
 interface Event {
-  id: ID!                   # Concatenation of block number and log ID
+  id: ID!    # Concatenation of block number and log ID
 }
 
 type Signup implements Event @entity {
