@@ -30,13 +30,6 @@ npm run create
 npm run deploy
 ```
 
-## Deployment
-
-```
-npm run deploy:staging
-npm run deploy:production
-```
-
 ## License
 
 GNU Affero General Public License v3.0 `AGPL-3.0`

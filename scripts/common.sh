@@ -1,25 +1,16 @@
 #!/bin/bash
 
 # Configuration
+env_file=".env"
 manifest_file=subgraph.yaml
 manifest_tmp_file=.subgraph.tmp.yaml
 
 # Export environment variables from a file
 export_env() {
-  env_name=$1
-  env_file=".env"
-
-  if ! [ -z "$env_name" ]; then
-    env_file="$env_file.$env_name"
+  if [ -f "$env_file" ]; then
+    set -a
+    source $env_file
   fi
-
-  if ! [ -f "$env_file" ]; then
-    echo "Error: $env_file not found" >&2
-    exit 1
-  fi
-
-  set -a
-  source $env_file
 }
 
 # Create subgraph manifest file with env variables

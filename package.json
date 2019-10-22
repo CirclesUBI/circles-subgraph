@@ -6,9 +6,7 @@
     "build": "./scripts/build.sh",
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
-    "deploy": "./scripts/deploy.sh",
-    "deploy:production": "./scripts/deploy.sh production",
-    "deploy:staging": "./scripts/deploy.sh staging"
+    "deploy": "./scripts/deploy.sh"
   },
   "repository": {
     "type": "git",
