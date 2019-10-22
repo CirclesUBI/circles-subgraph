@@ -1,12 +1,12 @@
 {
   "name": "circles-subgraph",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
-    "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
-    "create-local": "graph create graphprotocol/circles --node http://127.0.0.1:8020",
-    "deploy-local": "graph deploy graphprotocol/circles --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/"
+    "codegen": "graph codegen --output-dir ./src/types/",
+    "create:local": "graph create graphprotocol/circles --node http://127.0.0.1:8020",
+    "deploy:local": "graph deploy graphprotocol/circles --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
   },
   "repository": {
     "type": "git",
