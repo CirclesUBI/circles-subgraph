@@ -1,6 +1,6 @@
 import {
-  ProxyCreation as ProxyCreationEvent,
   CreateProxyCall,
+  ProxyCreation as ProxyCreationEvent,
 } from './types/ProxyFactory/ProxyFactory'
 
 import {
@@ -8,7 +8,7 @@ import {
   User,
 } from './types/schema'
 
-import { Bytes, BigInt, Address } from "@graphprotocol/graph-ts";
+import { Bytes, BigInt, Address } from '@graphprotocol/graph-ts'
 
 export function handleProxyCreation(event: ProxyCreationEvent): void {
   let safe = new Safe(event.params.proxy.toHex())

@@ -1,21 +1,22 @@
 import {
   Signup as SignupEvent,
-  Trust as TrustEvent
+  Trust as TrustEvent,
 } from './types/Hub/Hub'
 
 import {
-  Trust,
   Signup,
-  Token
+  Token,
+  Trust,
 } from './types/schema'
 
-import { Bytes, BigInt, Address } from "@graphprotocol/graph-ts";
+import { Bytes, BigInt, Address } from '@graphprotocol/graph-ts'
 
 export function handleSignup(event: SignupEvent): void {
   let signupEvent = new Signup(createEventID(event.block.number, event.logIndex))
   signupEvent.safe = event.params.user.toHex()
   signupEvent.token = event.params.token.toHex()
   signupEvent.save()
+
   let token = new Token(event.params.user.toHex())
   token.owner = event.params.user.toHex()
   token.save()
