@@ -1,4 +1,8 @@
 import {
+  BigInt,
+} from '@graphprotocol/graph-ts'
+
+import {
   Signup as SignupEvent,
   Trust as TrustEvent,
 } from './types/Hub/Hub'
@@ -8,8 +12,6 @@ import {
   Token,
   Trust,
 } from './types/schema'
-
-import { Bytes, BigInt, Address } from '@graphprotocol/graph-ts'
 
 export function handleSignup(event: SignupEvent): void {
   let signupEvent = new Signup(createEventID(event.block.number, event.logIndex))
