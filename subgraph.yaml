@@ -1,6 +1,6 @@
 specVersion: 0.0.3
-description: A secure & decentralized way to address resources on and off the blockchain using simple, human-readable names. Access domains and transfer history.
-repository: https://github.com/CirclesUBI/circles-subgraph/
+description: Circles subgraph for The Graph to fastly query available data in the Circles UBI ecosystem
+repository: https://github.com/CirclesUBI/circles-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
