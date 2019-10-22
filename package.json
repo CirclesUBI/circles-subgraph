@@ -5,15 +5,18 @@
   "scripts": {
     "build": "graph build",
     "codegen": "graph codegen --output-dir ./src/types/",
-    "create:local": "graph create graphprotocol/circles --node http://127.0.0.1:8020",
-    "deploy:local": "graph deploy graphprotocol/circles --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020"
+    "create": "./scripts/create.sh",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:production": "./scripts/deploy.sh production",
+    "deploy:staging": "./scripts/deploy.sh staging"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CirclesUBI/circles-subgraph.git"
   },
   "contributors": [
-    "ana0"
+    "ana0",
+    "adzialocha"
   ],
   "license": "AGPL-3.0",
   "bugs": {
