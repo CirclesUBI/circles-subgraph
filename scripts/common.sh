@@ -35,14 +35,20 @@ build_manifest() {
 # Remove the temporarily created subgraph manifest
 clear_manifest() {
   if [ -f "$manifest_tmp_file" ]; then
-    echo $manifest_tmp_file
+    rm $manifest_tmp_file
   fi
 }
 
 # Helper method to run graph-cli commands
 exec_graph() {
+  exec_args=""
+
   debug_flag=""
   access_token=""
+
+  if ! [ -z "$2" ]; then
+    exec_args=" $2"
+  fi
 
   if [ "$IS_DEBUG" == "true" ]; then
     debug_flag=" --debug"
@@ -54,9 +60,8 @@ exec_graph() {
 
   # Build graph arguments
   exec_command=$1
-  exec_args=$2
 
-  args="$exec_command $SUBGRAPH_NAME $exec_args$debug_flag$access_token"
+  args="$exec_command$exec_args$debug_flag$access_token"
   echo "graph $args"
 
   # Add temporary manifest file when given

@@ -8,8 +8,8 @@ export_env $1
 # Prepare manifest
 build_manifest
 
-# Deploy graph
-exec_graph deploy "$SUBGRAPH_NAME --ipfs $NODE_IPFS --node $NODE_GRAPH"
+# Build graph
+exec_graph codegen "--output-dir ./src/types"
 
 # Cleanup
 clear_manifest
