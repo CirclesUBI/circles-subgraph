@@ -8,7 +8,7 @@ dataSources:
     kind: ethereum/contract
     network: ganache
     source:
-      address: "${ADDRESS_HUB}"
+      address: "${HUB_ADDRESS}"
       abi: Hub
     mapping:
       kind: ethereum/events
@@ -31,7 +31,7 @@ dataSources:
     kind: ethereum/contract
     network: ganache
     source:
-      address: "${ADDRESS_PROXY_FACTORY}"
+      address: "${PROXY_FACTORY_ADDRESS}"
       abi: ProxyFactory
     mapping:
       kind: ethereum/events
