@@ -3,7 +3,7 @@
 # Configuration
 env_file=".env"
 manifest_file=subgraph.yaml
-manifest_tmp_file=.subgraph.tmp.yaml
+manifest_tmp_file="$PWD/.subgraph.tmp.yaml"
 
 # Export environment variables from a file
 export_env() {
@@ -52,14 +52,16 @@ exec_graph() {
   # Build graph arguments
   exec_command=$1
 
-  args="$exec_command$exec_args$debug_flag$access_token"
-  echo "graph $args"
+  args="$exec_command$exec_args"
 
   # Add temporary manifest file when given
   if [ -f "$manifest_tmp_file" ]; then
     args="$args $manifest_tmp_file"
   fi
 
+  args="$args$debug_flag$access_token"
+
   # Execute graph command
+  echo "graph $args"
   ./node_modules/.bin/graph $args
 }
