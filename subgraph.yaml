@@ -47,9 +47,6 @@ dataSources:
       eventHandlers:
         - event: ProxyCreation(address)
           handler: handleProxyCreation
-      callHandlers:
-        - function: createProxy(address,bytes)
-          handler: handleCreateProxyCall
 templates:
   - name: GnosisSafe
     kind: ethereum/contract
