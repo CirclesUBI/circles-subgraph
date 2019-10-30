@@ -24,6 +24,8 @@ type Safe @entity {
 type Balance @entity {
   id: ID!
   amount: BigInt
+  token: String!
+  ownedBySafe: Safe
 }
 
 interface Event {

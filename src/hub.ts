@@ -25,7 +25,11 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
-  let trustEvent = new Trust(createEventID(event.block.number, event.logIndex))
+  let trustEvent = Trust.load(createEventID(event.params.from, event.params.to))
+  if (!trustEvent) {
+    trustEvent = new Trust(createEventID(event.params.from, event.params.to))
+  }
+  let trustEvent = new Trust(createEventID(event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHex()
   trustEvent.to = event.params.to.toHex()
   trustEvent.limit = event.params.limit
