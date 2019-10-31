@@ -66,3 +66,5 @@ templates:
       eventHandlers:
         - event: AddedOwner(address)
           handler: handleAddedOwner
+        - event: RemovedOwner(address)
+          handler: handleRemovedOwner

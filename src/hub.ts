@@ -1,5 +1,7 @@
 import {
   BigInt,
+  Address,
+  store,
 } from '@graphprotocol/graph-ts'
 
 import {
@@ -25,15 +27,20 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
-  let trustEvent = Trust.load(createEventID(event.params.from, event.params.to))
-  if (!trustEvent) {
-    trustEvent = new Trust(createEventID(event.params.from, event.params.to))
+  if (event.params.limit == new BigInt(0)) {
+    store.remove('Trust', createTrustID(event.params.from, event.params.to))
+    return
   }
-  let trustEvent = new Trust(createEventID(event.params.from, event.params.to))
+  let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHex()
   trustEvent.to = event.params.to.toHex()
   trustEvent.limit = event.params.limit
   trustEvent.save()
+  return
+}
+
+function createTrustID(from: Address, to: Address): string {
+  return from.toString().concat('-').concat(to.toString())
 }
 
 function createEventID(blockNumber: BigInt, logIndex: BigInt): string {
