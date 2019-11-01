@@ -15,19 +15,25 @@ import {
   Trust,
 } from './types/schema'
 
+import {
+  Token as TokenContract,
+} from './types/templates'
+
 export function handleSignup(event: SignupEvent): void {
+  TokenContract.create(event.params.token)
+
   let signupEvent = new Signup(createEventID(event.block.number, event.logIndex))
   signupEvent.safe = event.params.user.toHex()
   signupEvent.token = event.params.token.toHex()
   signupEvent.save()
 
-  let token = new Token(event.params.user.toHex())
+  let token = new Token(event.params.token.toHex())
   token.owner = event.params.user.toHex()
   token.save()
 }
 
 export function handleTrust(event: TrustEvent): void {
-  if (event.params.limit == new BigInt(0)) {
+  if (event.params.limit === new BigInt(0)) {
     store.remove('Trust', createTrustID(event.params.from, event.params.to))
     return
   }
@@ -36,7 +42,6 @@ export function handleTrust(event: TrustEvent): void {
   trustEvent.to = event.params.to.toHex()
   trustEvent.limit = event.params.limit
   trustEvent.save()
-  return
 }
 
 function createTrustID(from: Address, to: Address): string {

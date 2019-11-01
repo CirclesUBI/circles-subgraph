@@ -43,7 +43,7 @@ dataSources:
         - Safe
       abis:
         - name: ProxyFactory
-          file: ./node_modules/@gnosis.pm/safe-contracts/build/contracts/ProxyFactory.json
+          file: ./node_modules/@circles/safe-contracts/build/contracts/ProxyFactory.json
       eventHandlers:
         - event: ProxyCreation(address)
           handler: handleProxyCreation
@@ -60,11 +60,32 @@ templates:
       file: ./src/gnosisSafe.ts
       entities:
         - Safe
+        - User
       abis:
         - name: GnosisSafe
-          file: ./node_modules/@gnosis.pm/safe-contracts/build/contracts/GnosisSafe.json
+          file: ./node_modules/@circles/safe-contracts/build/contracts/GnosisSafe.json
       eventHandlers:
         - event: AddedOwner(address)
           handler: handleAddedOwner
         - event: RemovedOwner(address)
           handler: handleRemovedOwner
+  - name: Token
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Token
+        - Balance
+      abis:
+        - name: Token
+          file: ./node_modules/circles-contracts/build/contracts/Token.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+

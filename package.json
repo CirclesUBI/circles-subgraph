@@ -26,7 +26,7 @@
     "truffle": "^5.0.41"
   },
   "dependencies": {
-    "circles-contracts": "^1.0.5",
+    "circles-contracts": "^1.0.7",
     "web3": "^1.2.1"
   }
 }

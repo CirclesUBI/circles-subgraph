@@ -18,14 +18,14 @@ type Safe @entity {
   owners: [User!]! @derivedFrom(field: "safe")
   trusts: [Trust!]! @derivedFrom(field: "from")
   isTrustedBy: [Trust!]! @derivedFrom(field: "to")
-  balances: [Balance!]
+  balances: [Balance!]! @derivedFrom(field: "owner")
 }
 
 type Balance @entity {
   id: ID!
-  amount: BigInt
-  token: String!
-  ownedBySafe: Safe
+  amount: BigInt!
+  owner: Safe!
+  token: Token!
 }
 
 interface Event {
