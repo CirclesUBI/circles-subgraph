@@ -19,7 +19,7 @@ export function handleTransfer(event: TransferEvent): void {
   let tokenContract = TokenContract.bind(event.address);
   balTo.amount = tokenContract.balanceOf(event.params.to);
   balTo.save()
-  if (event.params.from.toHexString() !=== '0x0000000000000000000000000000000000000000') {
+  if (event.params.from.toHexString() !== '0x0000000000000000000000000000000000000000') {
 	  let balFrom = new Balance(createBalanceID(event.address, event.params.from))
 	  balFrom.owner = event.params.from.toHex()
 	  balFrom.token = event.address.toHex()
