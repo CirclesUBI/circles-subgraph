@@ -13,8 +13,8 @@ import {
 } from './types/schema'
 
 export function handleAddedOwner(event: AddedOwnerEvent): void {
-  let user = new User(event.params.owner.toHex())
-  user.safe = event.address.toHex()
+  let user = new User(event.params.owner.toHexString())
+  user.safe = event.address.toHexString()
   user.save()
 }
 

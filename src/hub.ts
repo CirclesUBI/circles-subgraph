@@ -38,14 +38,14 @@ export function handleTrust(event: TrustEvent): void {
     return
   }
   let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
-  trustEvent.from = event.params.from.toHex()
-  trustEvent.to = event.params.to.toHex()
+  trustEvent.from = event.params.from.toHexString()
+  trustEvent.to = event.params.to.toHexString()
   trustEvent.limit = event.params.limit
   trustEvent.save()
 }
 
 function createTrustID(from: Address, to: Address): string {
-  return from.toString().concat('-').concat(to.toString())
+  return from.toHexString().concat('-').concat(to.toHexString())
 }
 
 function createEventID(blockNumber: BigInt, logIndex: BigInt): string {
