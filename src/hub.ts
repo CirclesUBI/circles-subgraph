@@ -7,6 +7,7 @@ import {
 import {
   Signup as SignupEvent,
   Trust as TrustEvent,
+  Hub as HubContract,
 } from './types/Hub/Hub'
 
 import {
@@ -18,6 +19,11 @@ import {
 import {
   Token as TokenContract,
 } from './types/templates'
+
+import {
+  createTrustID,
+  createEventID,
+} from './utils'
 
 export function handleSignup(event: SignupEvent): void {
   TokenContract.create(event.params.token)
@@ -40,14 +46,8 @@ export function handleTrust(event: TrustEvent): void {
   let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHexString()
   trustEvent.to = event.params.to.toHexString()
-  trustEvent.limit = event.params.limit
+  let hub = HubContract.bind(event.address);
+  trustEvent.limit = hub.checkSendLimit(event.params.from, event.params.to);
+  trustEvent.limitPercentage = event.params.limit
   trustEvent.save()
-}
-
-function createTrustID(from: Address, to: Address): string {
-  return from.toHexString().concat('-').concat(to.toHexString())
-}
-
-function createEventID(blockNumber: BigInt, logIndex: BigInt): string {
-  return blockNumber.toString().concat('-').concat(logIndex.toString())
 }

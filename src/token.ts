@@ -1,5 +1,6 @@
 import {
   Address,
+  store,
 } from '@graphprotocol/graph-ts'
 
 import {
@@ -8,9 +9,20 @@ import {
 } from './types/templates/Token/Token'
 
 import {
+  Trust as TrustEvent,
+  Hub as HubContract,
+} from './types/Hub/Hub'
+
+import {
   Token,
   Balance,
+  Trust
 } from './types/schema'
+
+import {
+  createTrustID,
+  createBalanceID,
+} from './utils'
 
 export function handleTransfer(event: TransferEvent): void {
   let balTo = new Balance(createBalanceID(event.address, event.params.to))
@@ -26,12 +38,16 @@ export function handleTransfer(event: TransferEvent): void {
 	  balFrom.amount = tokenContract.balanceOf(event.params.from);
 	  balFrom.save()
   }
+  updateMaxTrust(event.params.from, event.params.to, event.address)
 }
 
-export function handleTransferFrom(event: TransferEvent): void {  
-  handleTransfer(event)
-}
-
-function createBalanceID(from: Address, to: Address): string {
-  return from.toHexString().concat('-').concat(to.toHexString())
+function updateMaxTrust(from: Address, to: Address, token: Address): void {
+  let trust = Trust.load(createTrustID(from, to))
+  if (trust !== null) {
+    let tokenContract = TokenContract.bind(token);
+    let hubAddress = tokenContract.hub()
+    let hub = HubContract.bind(hubAddress);
+    trust.limit = hub.checkSendLimit(from, to);
+    trust.save()
+  }
 }

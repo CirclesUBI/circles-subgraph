@@ -43,6 +43,7 @@ type Trust implements Event @entity {
   from: Safe!
   to: Safe!
   limit: BigInt!
+  limitPercentage: BigInt!
 }
 
 type ProxyCreation implements Event @entity {
