@@ -25,20 +25,20 @@ import {
 } from './utils'
 
 export function handleTransfer(event: TransferEvent): void {
+  let tokenContract = TokenContract.bind(event.address);
   let balTo = new Balance(createBalanceID(event.address, event.params.to))
   balTo.owner = event.params.to.toHex()
   balTo.token = event.address.toHex()
-  let tokenContract = TokenContract.bind(event.address);
   balTo.amount = tokenContract.balanceOf(event.params.to);
   balTo.save()
-  if (event.params.from.toHexString() !== '0x0000000000000000000000000000000000000000') {
+  if (event.params.from.toHexString() != '0x0000000000000000000000000000000000000000') {
 	  let balFrom = new Balance(createBalanceID(event.address, event.params.from))
 	  balFrom.owner = event.params.from.toHex()
 	  balFrom.token = event.address.toHex()
 	  balFrom.amount = tokenContract.balanceOf(event.params.from);
 	  balFrom.save()
   }
-  updateMaxTrust(event.params.from, event.params.to, event.address)
+  updateMaxTrust(event.params.to, event.params.from, event.address)
 }
 
 function updateMaxTrust(from: Address, to: Address, token: Address): void {
@@ -47,7 +47,7 @@ function updateMaxTrust(from: Address, to: Address, token: Address): void {
     let tokenContract = TokenContract.bind(token);
     let hubAddress = tokenContract.hub()
     let hub = HubContract.bind(hubAddress);
-    trust.limit = hub.checkSendLimit(from, to);
+    trust.limit = hub.checkSendLimit(to, from);
     trust.save()
   }
 }

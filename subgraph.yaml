@@ -85,6 +85,8 @@ templates:
       abis:
         - name: Token
           file: ./node_modules/circles-contracts/build/contracts/Token.json
+        - name: Hub
+          file: ./node_modules/circles-contracts/build/contracts/Hub.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
