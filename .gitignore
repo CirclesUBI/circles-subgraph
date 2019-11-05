@@ -1,8 +1,14 @@
+*.log
+*.swp
+*.txt
+
+# Custom build
+.subgraph.tmp.yaml
+.env
+
 # Graph cli generated
 src/types
-build/
-.DS_STORE
-node_modules
+build
 
-*.txt
-*.swp
+# npm
+node_modules

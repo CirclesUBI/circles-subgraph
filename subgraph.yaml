@@ -1,0 +1,93 @@
+specVersion: 0.0.3
+description: Circles subgraph for The Graph to fastly query available data in the Circles UBI ecosystem
+repository: https://github.com/CirclesUBI/circles-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - name: Hub
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      address: "${HUB_ADDRESS}"
+      abi: Hub
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/hub.ts
+      entities:
+        - Token
+        - Signup
+        - Trust
+      abis:
+        - name: Hub
+          file: ./node_modules/circles-contracts/build/contracts/Hub.json
+      eventHandlers:
+        - event: Signup(indexed address,address)
+          handler: handleSignup
+        - event: Trust(indexed address,indexed address,uint256)
+          handler: handleTrust
+  - name: ProxyFactory
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      address: "${PROXY_FACTORY_ADDRESS}"
+      abi: ProxyFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/proxyFactory.ts
+      entities:
+        - ProxyCreation
+        - Safe
+      abis:
+        - name: ProxyFactory
+          file: ./node_modules/@circles/safe-contracts/build/contracts/ProxyFactory.json
+      eventHandlers:
+        - event: ProxyCreation(address)
+          handler: handleProxyCreation
+templates:
+  - name: GnosisSafe
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      abi: GnosisSafe
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/gnosisSafe.ts
+      entities:
+        - Safe
+        - User
+      abis:
+        - name: GnosisSafe
+          file: ./node_modules/@circles/safe-contracts/build/contracts/GnosisSafe.json
+      eventHandlers:
+        - event: AddedOwner(address)
+          handler: handleAddedOwner
+        - event: RemovedOwner(address)
+          handler: handleRemovedOwner
+  - name: Token
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      abi: Token
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      file: ./src/token.ts
+      entities:
+        - Token
+        - Balance
+      abis:
+        - name: Token
+          file: ./node_modules/circles-contracts/build/contracts/Token.json
+        - name: Hub
+          file: ./node_modules/circles-contracts/build/contracts/Hub.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+

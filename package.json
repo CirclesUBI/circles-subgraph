@@ -1,25 +1,34 @@
 {
   "name": "circles-subgraph",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
-    "build": "graph build"
+    "build": "./scripts/build.sh",
+    "codegen": "./scripts/codegen.sh",
+    "create": "./scripts/create.sh",
+    "deploy": "./scripts/deploy.sh"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CirclesUBI/circles-subgraph.git"
   },
   "contributors": [
-    "ana0"
+    "ana0",
+    "adzialocha"
   ],
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
   },
   "devDependencies": {
-    "truffle": "^5.0.40"
+    "@graphprotocol/graph-cli": "^0.15.3",
+    "@graphprotocol/graph-ts": "^0.16.0",
+    "truffle": "^5.0.43"
   },
   "dependencies": {
-    "circles-contracts": "^1.0.5"
+    "@circles/safe-contracts": "^1.0.4",
+    "@types/node": "^12.12.5",
+    "circles-contracts": "^1.0.7",
+    "web3": "^1.2.2"
   }
 }

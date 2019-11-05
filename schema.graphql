@@ -1,0 +1,51 @@
+type Hub @entity {
+  id: ID!               # The namehash of the name
+  owner: Safe!
+}
+
+type Token @entity {
+  id: ID!               # The namehash of the name
+  owner: Safe!
+}
+
+type User @entity {
+  id: ID!
+  safe: Safe!
+}
+
+type Safe @entity {
+  id: ID!
+  owners: [User!]! @derivedFrom(field: "safe")
+  trusts: [Trust!]! @derivedFrom(field: "from")
+  isTrustedBy: [Trust!]! @derivedFrom(field: "to")
+  balances: [Balance!]! @derivedFrom(field: "owner")
+}
+
+type Balance @entity {
+  id: ID!
+  amount: BigInt!
+  owner: Safe!
+  token: Token!
+}
+
+interface Event {
+  id: ID!    # Concatenation of block number and log ID
+}
+
+type Signup implements Event @entity {
+  id: ID!
+  safe: String!
+  token: String!
+}
+
+type Trust implements Event @entity {
+  id: ID!
+  from: Safe!
+  to: Safe!
+  limit: BigInt!
+  limitPercentage: BigInt!
+}
+
+type ProxyCreation implements Event @entity {
+  id: ID!
+}
