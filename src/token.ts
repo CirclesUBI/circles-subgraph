@@ -47,7 +47,8 @@ function updateMaxTrust(from: Address, to: Address, token: Address): void {
     let tokenContract = TokenContract.bind(token);
     let hubAddress = tokenContract.hub()
     let hub = HubContract.bind(hubAddress);
-    trust.limit = hub.checkSendLimit(to, from);
+    let tokenOwner = tokenContract.owner();
+    trust.limit = hub.checkSendLimit(tokenOwner, to, from);
     trust.save()
   }
 }

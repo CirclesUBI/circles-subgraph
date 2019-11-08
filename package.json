@@ -28,7 +28,7 @@
   "dependencies": {
     "@circles/safe-contracts": "^1.0.4",
     "@types/node": "^12.12.5",
-    "circles-contracts": "^1.0.7",
+    "circles-contracts": "^1.0.9",
     "web3": "^1.2.2"
   }
 }
