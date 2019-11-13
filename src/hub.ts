@@ -1,20 +1,20 @@
 import {
-  BigInt,
   Address,
+  BigInt,
   store,
 } from '@graphprotocol/graph-ts'
 
 import {
+  Hub as HubContract,
   Signup as SignupEvent,
   Trust as TrustEvent,
-  Hub as HubContract,
 } from './types/Hub/Hub'
 
 import {
+  Notification,
   Signup,
   Token,
   Trust,
-  Notification,
   TrustChange,
 } from './types/schema'
 
@@ -23,8 +23,9 @@ import {
 } from './types/templates'
 
 import {
-  createTrustID,
   createEventID,
+  createNotificationID,
+  createTrustID,
 } from './utils'
 
 export function handleSignup(event: SignupEvent): void {
@@ -41,14 +42,26 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
-  let notificationFrom = new Notification(createEventID(event.block.number, event.logIndex))
+  let notificationFrom = new Notification(
+    createNotificationID(
+      'TRUST',
+      event.block.number,
+      event.logIndex
+    )
+  )
   notificationFrom.safe = event.params.from.toHexString()
   notificationFrom.type = 'TRUST'
   notificationFrom.time = event.block.timestamp
   notificationFrom.trust = createEventID(event.block.number, event.logIndex)
   notificationFrom.save()
 
-  let notificationTo = new Notification(createEventID(event.block.number, event.logIndex))
+  let notificationTo = new Notification(
+    createNotificationID(
+      'TRUST',
+      event.block.number,
+      event.logIndex
+    )
+  )
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRUST'
   notificationTo.time = event.block.timestamp
@@ -69,8 +82,9 @@ export function handleTrust(event: TrustEvent): void {
   let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHexString()
   trustEvent.to = event.params.to.toHexString()
-  let hub = HubContract.bind(event.address);
-  trustEvent.limit = hub.checkSendLimit(event.params.to, event.params.to, event.params.from);
+
+  let hub = HubContract.bind(event.address)
+  trustEvent.limit = hub.checkSendLimit(event.params.to, event.params.to, event.params.from)
   trustEvent.limitPercentage = event.params.limit
   trustEvent.save()
 }
