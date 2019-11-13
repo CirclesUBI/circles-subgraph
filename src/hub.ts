@@ -14,6 +14,8 @@ import {
   Signup,
   Token,
   Trust,
+  Notification,
+  TrustChange
 } from './types/schema'
 
 import {
@@ -39,10 +41,31 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
+  let notificationFrom = new Notification(createEventID(event.block.number, event.logIndex))
+  notificationFrom.safe = event.params.from.toHexString()
+  notificationFrom.type = "TRUST"
+  notificationFrom.time = event.block.timestamp
+  notificationFrom.trust = createEventID(event.block.number, event.logIndex)
+  notificationFrom.save()
+
+  let notificationTo = new Notification(createEventID(event.block.number, event.logIndex))
+  notificationTo.safe = event.params.to.toHexString()
+  notificationTo.type = "TRUST"
+  notificationTo.time = event.block.timestamp
+  notificationTo.trust = createEventID(event.block.number, event.logIndex)
+  notificationTo.save()
+
+  let trustChange = new TrustChange(createEventID(event.block.number, event.logIndex))
+  trustChange.from = event.params.from.toHexString()
+  trustChange.to = event.params.to.toHexString()
+  trustChange.limitPercentage = event.params.limit
+  trustChange.save()
+
   if (event.params.limit === new BigInt(0)) {
     store.remove('Trust', createTrustID(event.params.from, event.params.to))
     return
   }
+
   let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHexString()
   trustEvent.to = event.params.to.toHexString()

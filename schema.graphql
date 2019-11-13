@@ -49,3 +49,39 @@ type Trust implements Event @entity {
 type ProxyCreation implements Event @entity {
   id: ID!
 }
+
+enum NotificationType {
+  TRUST
+  TRANSER
+  OWNERSHIP
+}
+
+type TrustChange implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  limitPercentage: BigInt!
+}
+
+type Transfer implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+
+type OwnershipChange implements Event @entity {
+  id: ID!
+  adds: String
+  removes: String
+}
+
+type Notification implements Event @entity {
+  id: ID!
+  safe: Safe!
+  type: NotificationType!
+  time: BigInt!
+  trust: TrustChange
+  transfer: Transfer
+  ownership: OwnershipChange
+}
