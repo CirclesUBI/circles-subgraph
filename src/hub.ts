@@ -15,7 +15,7 @@ import {
   Token,
   Trust,
   Notification,
-  TrustChange
+  TrustChange,
 } from './types/schema'
 
 import {
@@ -43,14 +43,14 @@ export function handleSignup(event: SignupEvent): void {
 export function handleTrust(event: TrustEvent): void {
   let notificationFrom = new Notification(createEventID(event.block.number, event.logIndex))
   notificationFrom.safe = event.params.from.toHexString()
-  notificationFrom.type = "TRUST"
+  notificationFrom.type = 'TRUST'
   notificationFrom.time = event.block.timestamp
   notificationFrom.trust = createEventID(event.block.number, event.logIndex)
   notificationFrom.save()
 
   let notificationTo = new Notification(createEventID(event.block.number, event.logIndex))
   notificationTo.safe = event.params.to.toHexString()
-  notificationTo.type = "TRUST"
+  notificationTo.type = 'TRUST'
   notificationTo.time = event.block.timestamp
   notificationTo.trust = createEventID(event.block.number, event.logIndex)
   notificationTo.save()

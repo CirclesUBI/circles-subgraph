@@ -11,7 +11,7 @@ import {
   Safe,
   User,
   Notification,
-  OwnershipChange
+  OwnershipChange,
 } from './types/schema'
 
 import {
@@ -29,7 +29,7 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
 
   let notification = new Notification(createEventID(event.block.number, event.logIndex))
   notification.safe = event.address.toHexString()
-  notification.type = "OWNERSHIP"
+  notification.type = 'OWNERSHIP'
   notification.time = event.block.timestamp
   notification.ownership = createEventID(event.block.number, event.logIndex)
   notification.save()
@@ -44,7 +44,7 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
 
   let notification = new Notification(createEventID(event.block.number, event.logIndex))
   notification.safe = event.address.toHexString()
-  notification.type = "OWNERSHIP"
+  notification.type = 'OWNERSHIP'
   notification.time = event.block.timestamp
   notification.ownership = createEventID(event.block.number, event.logIndex)
   notification.save()

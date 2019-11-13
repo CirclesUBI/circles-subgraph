@@ -18,7 +18,7 @@ import {
   Balance,
   Trust,
   Notification,
-  Transfer
+  Transfer,
 } from './types/schema'
 
 import {
@@ -30,7 +30,7 @@ import {
 export function handleTransfer(event: TransferEvent): void {
   let notificationTo = new Notification(createEventID(event.block.number, event.logIndex))
   notificationTo.safe = event.params.to.toHexString()
-  notificationTo.type = "TRANSER"
+  notificationTo.type = 'TRANSFER'
   notificationTo.time = event.block.timestamp
   notificationTo.trust = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
@@ -50,15 +50,15 @@ export function handleTransfer(event: TransferEvent): void {
   balTo.save()
 
   if (event.params.from.toHexString() != '0x0000000000000000000000000000000000000000') {
-	  let balFrom = new Balance(createBalanceID(event.address, event.params.from))
-	  balFrom.owner = event.params.from.toHex()
-	  balFrom.token = event.address.toHex()
-	  balFrom.amount = tokenContract.balanceOf(event.params.from);
-	  balFrom.save()
+    let balFrom = new Balance(createBalanceID(event.address, event.params.from))
+    balFrom.owner = event.params.from.toHex()
+    balFrom.token = event.address.toHex()
+    balFrom.amount = tokenContract.balanceOf(event.params.from);
+    balFrom.save()
 
     let notificationFrom = new Notification(createEventID(event.block.number, event.logIndex))
     notificationFrom.safe = event.params.from.toHexString()
-    notificationFrom.type = "TRANSER"
+    notificationFrom.type = 'TRANSFER'
     notificationFrom.time = event.block.timestamp
     notificationFrom.trust = createEventID(event.block.number, event.logIndex)
     notificationFrom.save()

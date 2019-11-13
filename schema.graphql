@@ -52,7 +52,7 @@ type ProxyCreation implements Event @entity {
 
 enum NotificationType {
   TRUST
-  TRANSER
+  TRANSFER
   OWNERSHIP
 }
 
