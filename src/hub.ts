@@ -49,6 +49,7 @@ export function handleTrust(event: TrustEvent): void {
       event.logIndex
     )
   )
+  notificationFrom.transactionHash = event.transaction.hash.toHexString()
   notificationFrom.safe = event.params.from.toHexString()
   notificationFrom.type = 'TRUST'
   notificationFrom.time = event.block.timestamp
@@ -62,6 +63,7 @@ export function handleTrust(event: TrustEvent): void {
       event.logIndex
     )
   )
+  notificationTo.transactionHash = event.transaction.hash.toHexString()
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRUST'
   notificationTo.time = event.block.timestamp

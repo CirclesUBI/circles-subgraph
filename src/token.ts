@@ -36,6 +36,7 @@ export function handleTransfer(event: TransferEvent): void {
       event.logIndex
     )
   )
+  notificationFrom.transactionHash = event.transaction.hash.toHexString()
   notificationFrom.safe = event.params.from.toHexString()
   notificationFrom.type = 'TRANSFER'
   notificationFrom.time = event.block.timestamp
@@ -49,6 +50,7 @@ export function handleTransfer(event: TransferEvent): void {
       event.logIndex
     )
   )
+  notificationTo.transactionHash = event.transaction.hash.toHexString()
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRANSFER'
   notificationTo.time = event.block.timestamp
@@ -83,6 +85,7 @@ export function handleTransfer(event: TransferEvent): void {
         event.logIndex
       )
     )
+    notificationFrom.transactionHash = event.transaction.hash.toHexString()
     notificationFrom.safe = event.params.from.toHexString()
     notificationFrom.type = 'TRANSFER'
     notificationFrom.time = event.block.timestamp
