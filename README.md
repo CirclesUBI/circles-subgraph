@@ -24,8 +24,8 @@ npm install
 cp .env.example .env
 
 // Use graph commands
-npm run build
 npm run codegen
+npm run build
 npm run create
 npm run deploy
 ```

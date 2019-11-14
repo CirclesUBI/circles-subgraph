@@ -21,14 +21,14 @@
     "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.15.3",
+    "@graphprotocol/graph-cli": "^0.16.1",
     "@graphprotocol/graph-ts": "^0.16.0",
-    "truffle": "^5.0.43"
+    "truffle": "^5.1.0"
   },
   "dependencies": {
     "@circles/safe-contracts": "^1.0.4",
-    "@types/node": "^12.12.5",
-    "circles-contracts": "^1.0.7",
+    "@types/node": "^12.12.7",
+    "circles-contracts": "^1.0.10",
     "web3": "^1.2.2"
   }
 }

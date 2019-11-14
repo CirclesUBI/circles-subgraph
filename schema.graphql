@@ -1,10 +1,10 @@
 type Hub @entity {
-  id: ID!               # The namehash of the name
+  id: ID! # The namehash of the name
   owner: Safe!
 }
 
 type Token @entity {
-  id: ID!               # The namehash of the name
+  id: ID! # The namehash of the name
   owner: Safe!
 }
 
@@ -29,7 +29,7 @@ type Balance @entity {
 }
 
 interface Event {
-  id: ID!    # Concatenation of block number and log ID
+  id: ID! # Concatenation of block number and log ID
 }
 
 type Signup implements Event @entity {
@@ -48,4 +48,40 @@ type Trust implements Event @entity {
 
 type ProxyCreation implements Event @entity {
   id: ID!
+}
+
+enum NotificationType {
+  OWNERSHIP
+  TRANSFER
+  TRUST
+}
+
+type TrustChange implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  limitPercentage: BigInt!
+}
+
+type Transfer implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+
+type OwnershipChange implements Event @entity {
+  id: ID!
+  adds: String
+  removes: String
+}
+
+type Notification implements Event @entity {
+  id: ID!
+  safe: Safe!
+  type: NotificationType!
+  time: BigInt!
+  trust: TrustChange
+  transfer: Transfer
+  ownership: OwnershipChange
 }
