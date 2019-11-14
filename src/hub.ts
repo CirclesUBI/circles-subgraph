@@ -44,7 +44,7 @@ export function handleSignup(event: SignupEvent): void {
 export function handleTrust(event: TrustEvent): void {
   let notificationFrom = new Notification(
     createNotificationID(
-      'TRUST',
+      'trust-from',
       event.block.number,
       event.logIndex
     )
@@ -57,7 +57,7 @@ export function handleTrust(event: TrustEvent): void {
 
   let notificationTo = new Notification(
     createNotificationID(
-      'TRUST',
+      'trust-to',
       event.block.number,
       event.logIndex
     )

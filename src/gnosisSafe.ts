@@ -30,7 +30,7 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
 
   let notification = new Notification(
     createNotificationID(
-      'OWNERSHIP',
+      'ownership',
       event.block.number,
       event.logIndex
     )

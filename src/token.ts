@@ -29,9 +29,22 @@ import {
 } from './utils'
 
 export function handleTransfer(event: TransferEvent): void {
+  let notificationFrom = new Notification(
+    createNotificationID(
+      'transfer-from',
+      event.block.number,
+      event.logIndex
+    )
+  )
+  notificationFrom.safe = event.params.from.toHexString()
+  notificationFrom.type = 'TRANSFER'
+  notificationFrom.time = event.block.timestamp
+  notificationFrom.transfer = createEventID(event.block.number, event.logIndex)
+  notificationFrom.save()
+
   let notificationTo = new Notification(
     createNotificationID(
-      'TRANSFER',
+      'transfer-to',
       event.block.number,
       event.logIndex
     )
