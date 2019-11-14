@@ -39,7 +39,7 @@ export function handleTransfer(event: TransferEvent): void {
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRANSFER'
   notificationTo.time = event.block.timestamp
-  notificationTo.trust = createEventID(event.block.number, event.logIndex)
+  notificationTo.transfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
 
   let transfer = new Transfer(createEventID(event.block.number, event.logIndex))
@@ -73,7 +73,7 @@ export function handleTransfer(event: TransferEvent): void {
     notificationFrom.safe = event.params.from.toHexString()
     notificationFrom.type = 'TRANSFER'
     notificationFrom.time = event.block.timestamp
-    notificationFrom.trust = createEventID(event.block.number, event.logIndex)
+    notificationFrom.transfer = createEventID(event.block.number, event.logIndex)
     notificationFrom.save()
   }
 
