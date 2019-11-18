@@ -26,9 +26,9 @@
     "truffle": "^5.1.0"
   },
   "dependencies": {
-    "@circles/safe-contracts": "^1.0.4",
-    "@types/node": "^12.12.7",
-    "circles-contracts": "^1.0.10",
+    "@circles/safe-contracts": "^1.0.5",
+    "@types/node": "^12.12.9",
+    "circles-contracts": "^1.0.13",
     "web3": "^1.2.4"
   }
 }
