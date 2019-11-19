@@ -77,11 +77,11 @@ export function handleTrust(event: TrustEvent): void {
   trustChange.save()
 
   if (event.params.limit === new BigInt(0)) {
-    store.remove('Trust', createTrustID(event.params.from, event.params.to))
+    store.remove('Trust', createTrustID(event.params.to, event.params.from, event.params.to))
     return
   }
 
-  let trustEvent = new Trust(createTrustID(event.params.from, event.params.to))
+  let trustEvent = new Trust(createTrustID(event.params.to, event.params.from, event.params.to))
   trustEvent.from = event.params.from.toHexString()
   trustEvent.to = event.params.to.toHexString()
 
