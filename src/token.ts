@@ -31,15 +31,16 @@ import {
 export function handleTransfer(event: TransferEvent): void {
   let notificationTo = new Notification(
     createNotificationID(
-      'TRANSFER',
+      'transfer-to',
       event.block.number,
       event.logIndex
     )
   )
+  notificationTo.transactionHash = event.transaction.hash.toHexString()
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRANSFER'
   notificationTo.time = event.block.timestamp
-  notificationTo.trust = createEventID(event.block.number, event.logIndex)
+  notificationTo.transfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
 
   let transfer = new Transfer(createEventID(event.block.number, event.logIndex))
@@ -65,15 +66,16 @@ export function handleTransfer(event: TransferEvent): void {
 
     let notificationFrom = new Notification(
       createNotificationID(
-        'TRANSFER',
+        'transfer-from',
         event.block.number,
         event.logIndex
       )
     )
+    notificationFrom.transactionHash = event.transaction.hash.toHexString()
     notificationFrom.safe = event.params.from.toHexString()
     notificationFrom.type = 'TRANSFER'
     notificationFrom.time = event.block.timestamp
-    notificationFrom.trust = createEventID(event.block.number, event.logIndex)
+    notificationFrom.transfer = createEventID(event.block.number, event.logIndex)
     notificationFrom.save()
   }
 

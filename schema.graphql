@@ -81,6 +81,7 @@ type Notification implements Event @entity {
   safe: Safe!
   type: NotificationType!
   time: BigInt!
+  transactionHash: String!
   trust: TrustChange
   transfer: Transfer
   ownership: OwnershipChange

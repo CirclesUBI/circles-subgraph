@@ -1,6 +1,6 @@
 {
   "name": "circles-subgraph",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
     "build": "./scripts/build.sh",
@@ -21,7 +21,7 @@
     "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.16.1",
+    "@graphprotocol/graph-cli": "^0.16.2",
     "@graphprotocol/graph-ts": "^0.16.0",
     "truffle": "^5.1.0"
   },

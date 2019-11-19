@@ -44,11 +44,12 @@ export function handleSignup(event: SignupEvent): void {
 export function handleTrust(event: TrustEvent): void {
   let notificationFrom = new Notification(
     createNotificationID(
-      'TRUST',
+      'trust-from',
       event.block.number,
       event.logIndex
     )
   )
+  notificationFrom.transactionHash = event.transaction.hash.toHexString()
   notificationFrom.safe = event.params.from.toHexString()
   notificationFrom.type = 'TRUST'
   notificationFrom.time = event.block.timestamp
@@ -57,11 +58,12 @@ export function handleTrust(event: TrustEvent): void {
 
   let notificationTo = new Notification(
     createNotificationID(
-      'TRUST',
+      'trust-to',
       event.block.number,
       event.logIndex
     )
   )
+  notificationTo.transactionHash = event.transaction.hash.toHexString()
   notificationTo.safe = event.params.to.toHexString()
   notificationTo.type = 'TRUST'
   notificationTo.time = event.block.timestamp
