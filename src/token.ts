@@ -94,6 +94,11 @@ function updateMaxTrust(from: Address, to: Address, token: Address): void {
 
   let hubAddress = tokenContract.hub()
   let hub = HubContract.bind(hubAddress)
-  trust.limit = hub.checkSendLimit(tokenOwner, to, from)
+  let callResult = hub.try_checkSendLimit(tokenOwner, to, from)
+  if (callResult.reverted) {
+    trustEvent.limit = new BigInt(0)
+  } else {
+    trustEvent.limit = callResult.value
+  }
   trust.save()
 }
