@@ -1,5 +1,6 @@
 import {
   Address,
+  BigInt,
   store,
 } from '@graphprotocol/graph-ts'
 
@@ -96,9 +97,9 @@ function updateMaxTrust(from: Address, to: Address, token: Address): void {
   let hub = HubContract.bind(hubAddress)
   let callResult = hub.try_checkSendLimit(tokenOwner, to, from)
   if (callResult.reverted) {
-    trustEvent.limit = new BigInt(0)
+    trust.limit = new BigInt(0)
   } else {
-    trustEvent.limit = callResult.value
+    trust.limit = callResult.value
   }
   trust.save()
 }
