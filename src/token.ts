@@ -83,11 +83,11 @@ export function handleTransfer(event: TransferEvent): void {
   updateMaxTrust(event.params.to, event.params.from, event.address)
 }
 
-function updateMaxTrust(from: Address, to: Address, token: Address): void {
+function updateMaxTrust(canSendTo: Address, user: Address, token: Address): void {
   let tokenContract = TokenContract.bind(token)
   let tokenOwner = tokenContract.owner()
 
-  let trust = Trust.load(createTrustID(tokenOwner, from, to))
+  let trust = Trust.load(createTrustID(tokenOwner, user, canSendTo))
 
   if (!trust) {
     return
@@ -95,7 +95,7 @@ function updateMaxTrust(from: Address, to: Address, token: Address): void {
 
   let hubAddress = tokenContract.hub()
   let hub = HubContract.bind(hubAddress)
-  let callResult = hub.try_checkSendLimit(tokenOwner, to, from)
+  let callResult = hub.try_checkSendLimit(tokenOwner, user, canSendTo)
   if (callResult.reverted) {
     trust.limit = new BigInt(0)
   } else {

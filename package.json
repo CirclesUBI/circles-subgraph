@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "@circles/safe-contracts": "^1.0.5",
-    "circles-contracts": "^1.0.13"
+    "circles-contracts": "^1.0.15"
   }
 }

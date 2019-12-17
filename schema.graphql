@@ -16,8 +16,8 @@ type User @entity {
 type Safe @entity {
   id: ID!
   owners: [User!]! @derivedFrom(field: "safe")
-  trusts: [Trust!]! @derivedFrom(field: "from")
-  isTrustedBy: [Trust!]! @derivedFrom(field: "to")
+  trusts: [Trust!]! @derivedFrom(field: "user")
+  isTrustedBy: [Trust!]! @derivedFrom(field: "canSendTo")
   balances: [Balance!]! @derivedFrom(field: "owner")
 }
 
@@ -40,8 +40,8 @@ type Signup implements Event @entity {
 
 type Trust implements Event @entity {
   id: ID!
-  from: Safe!
-  to: Safe!
+  canSendTo: Safe!
+  user: Safe!
   limit: BigInt!
   limitPercentage: BigInt!
 }
@@ -58,8 +58,8 @@ enum NotificationType {
 
 type TrustChange implements Event @entity {
   id: ID!
-  from: String!
-  to: String!
+  canSendTo: String!
+  user: String!
   limitPercentage: BigInt!
 }
 

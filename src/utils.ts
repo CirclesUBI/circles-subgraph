@@ -4,8 +4,8 @@ import {
   store,
 } from '@graphprotocol/graph-ts'
 
-export function createTrustID(token: Address, from: Address, to: Address): string {
-  return token.toHexString().concat('-').concat(from.toHexString().concat('-').concat(to.toHexString()))
+export function createTrustID(token: Address, user: Address, canSendTo: Address): string {
+  return token.toHexString().concat('-').concat(user.toHexString().concat('-').concat(canSendTo.toHexString()))
 }
 
 export function createEventID(blockNumber: BigInt, logIndex: BigInt): string {
