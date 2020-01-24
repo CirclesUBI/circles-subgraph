@@ -42,51 +42,51 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
-  let notificationFrom = new Notification(
+  let notificationCanSendTo = new Notification(
     createNotificationID(
       'trust-from',
       event.block.number,
       event.logIndex
     )
   )
-  notificationFrom.transactionHash = event.transaction.hash.toHexString()
-  notificationFrom.safe = event.params.from.toHexString()
-  notificationFrom.type = 'TRUST'
-  notificationFrom.time = event.block.timestamp
-  notificationFrom.trust = createEventID(event.block.number, event.logIndex)
-  notificationFrom.save()
+  notificationCanSendTo.transactionHash = event.transaction.hash.toHexString()
+  notificationCanSendTo.safe = event.params.canSendTo.toHexString()
+  notificationCanSendTo.type = 'TRUST'
+  notificationCanSendTo.time = event.block.timestamp
+  notificationCanSendTo.trust = createEventID(event.block.number, event.logIndex)
+  notificationCanSendTo.save()
 
-  let notificationTo = new Notification(
+  let notificationUser = new Notification(
     createNotificationID(
       'trust-to',
       event.block.number,
       event.logIndex
     )
   )
-  notificationTo.transactionHash = event.transaction.hash.toHexString()
-  notificationTo.safe = event.params.to.toHexString()
-  notificationTo.type = 'TRUST'
-  notificationTo.time = event.block.timestamp
-  notificationTo.trust = createEventID(event.block.number, event.logIndex)
-  notificationTo.save()
+  notificationUser.transactionHash = event.transaction.hash.toHexString()
+  notificationUser.safe = event.params.user.toHexString()
+  notificationUser.type = 'TRUST'
+  notificationUser.time = event.block.timestamp
+  notificationUser.trust = createEventID(event.block.number, event.logIndex)
+  notificationUser.save()
 
   let trustChange = new TrustChange(createEventID(event.block.number, event.logIndex))
-  trustChange.from = event.params.from.toHexString()
-  trustChange.to = event.params.to.toHexString()
+  trustChange.canSendTo = event.params.canSendTo.toHexString()
+  trustChange.user = event.params.user.toHexString()
   trustChange.limitPercentage = event.params.limit
   trustChange.save()
 
   if (event.params.limit === new BigInt(0)) {
-    store.remove('Trust', createTrustID(event.params.to, event.params.from, event.params.to))
+    store.remove('Trust', createTrustID(event.params.user, event.params.user, event.params.canSendTo))
     return
   }
 
-  let trustEvent = new Trust(createTrustID(event.params.to, event.params.from, event.params.to))
-  trustEvent.from = event.params.from.toHexString()
-  trustEvent.to = event.params.to.toHexString()
+  let trustEvent = new Trust(createTrustID(event.params.user, event.params.user, event.params.canSendTo))
+  trustEvent.canSendTo = event.params.canSendTo.toHexString()
+  trustEvent.user = event.params.user.toHexString()
 
   let hub = HubContract.bind(event.address)
-  let callResult = hub.try_checkSendLimit(event.params.to, event.params.to, event.params.from)
+  let callResult = hub.try_checkSendLimit(event.params.user, event.params.user, event.params.canSendTo)
   if (callResult.reverted) {
     trustEvent.limit = new BigInt(0)
   } else {
