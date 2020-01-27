@@ -6,7 +6,7 @@ import {
 
 import {
   Token as TokenContract,
-  Transfer as TransferEvent,
+  HubTransfer as HubTransferEvent,
 } from './types/templates/Token/Token'
 
 import {
@@ -18,7 +18,7 @@ import {
   Balance,
   Notification,
   Token,
-  Transfer,
+  HubTransfer,
   Trust,
 } from './types/schema'
 
@@ -29,7 +29,7 @@ import {
   createTrustID,
 } from './utils'
 
-export function handleTransfer(event: TransferEvent): void {
+export function handleTransfer(event: HubTransferEvent): void {
   let notificationTo = new Notification(
     createNotificationID(
       'transfer-to',
@@ -44,10 +44,10 @@ export function handleTransfer(event: TransferEvent): void {
   notificationTo.transfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
 
-  let transfer = new Transfer(createEventID(event.block.number, event.logIndex))
+  let transfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
   transfer.from = event.params.from.toHexString()
   transfer.to = event.params.to.toHexString()
-  transfer.amount = event.params.value
+  transfer.amount = event.params.amount
   transfer.save()
 
   let tokenContract = TokenContract.bind(event.address)
@@ -96,10 +96,12 @@ function updateMaxTrust(canSendTo: Address, user: Address, token: Address): void
   let hubAddress = tokenContract.hub()
   let hub = HubContract.bind(hubAddress)
   let callResult = hub.try_checkSendLimit(tokenOwner, user, canSendTo)
+
   if (callResult.reverted) {
     trust.limit = new BigInt(0)
   } else {
     trust.limit = callResult.value
   }
+
   trust.save()
 }

@@ -63,7 +63,7 @@ type TrustChange implements Event @entity {
   limitPercentage: BigInt!
 }
 
-type Transfer implements Event @entity {
+type HubTransfer implements Event @entity {
   id: ID!
   from: String!
   to: String!
@@ -83,6 +83,6 @@ type Notification implements Event @entity {
   time: BigInt!
   transactionHash: String!
   trust: TrustChange
-  transfer: Transfer
+  transfer: HubTransfer
   ownership: OwnershipChange
 }
