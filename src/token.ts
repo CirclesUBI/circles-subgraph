@@ -6,12 +6,12 @@ import {
 
 import {
   Token as TokenContract,
-  HubTransfer as HubTransferEvent,
 } from './types/templates/Token/Token'
 
 import {
   Hub as HubContract,
   Trust as TrustEvent,
+  HubTransfer as HubTransferEvent,
 } from './types/Hub/Hub'
 
 import {
@@ -29,7 +29,7 @@ import {
   createTrustID,
 } from './utils'
 
-export function handleTransfer(event: HubTransferEvent): void {
+export function handleHubTransfer(event: HubTransferEvent): void {
   let notificationTo = new Notification(
     createNotificationID(
       'transfer-to',

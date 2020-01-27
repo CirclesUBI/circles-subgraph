@@ -23,10 +23,12 @@ dataSources:
         - name: Hub
           file: ./node_modules/circles-contracts/build/contracts/Hub.json
       eventHandlers:
-        - event: Signup(indexed address,address)
+        - event: Signup(indexed address, address)
           handler: handleSignup
-        - event: Trust(indexed address,indexed address,uint256)
+        - event: Trust(indexed address, indexed address, uint256)
           handler: handleTrust
+        - event: HubTransfer(indexed address, indexed address, uint256)
+          handler: handleHubTransfer
   - name: ProxyFactory
     kind: ethereum/contract
     network: ${SUBGRAPH_NETWORK}
@@ -87,6 +89,3 @@ templates:
           file: ./node_modules/circles-contracts/build/contracts/Token.json
         - name: Hub
           file: ./node_modules/circles-contracts/build/contracts/Hub.json
-      eventHandlers:
-        - event: HubTransfer(indexed address, indexed address, uint256)
-          handler: handleTransfer
