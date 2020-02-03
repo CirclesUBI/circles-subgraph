@@ -50,6 +50,7 @@ export function handleTrust(event: TrustEvent): void {
     )
   )
   notificationCanSendTo.transactionHash = event.transaction.hash.toHexString()
+  notificationCanSendTo.safeAddress = event.params.canSendTo.toHexString()
   notificationCanSendTo.safe = event.params.canSendTo.toHexString()
   notificationCanSendTo.type = 'TRUST'
   notificationCanSendTo.time = event.block.timestamp
@@ -64,6 +65,7 @@ export function handleTrust(event: TrustEvent): void {
     )
   )
   notificationUser.transactionHash = event.transaction.hash.toHexString()
+  notificationUser.safeAddress = event.params.user.toHexString()
   notificationUser.safe = event.params.user.toHexString()
   notificationUser.type = 'TRUST'
   notificationUser.time = event.block.timestamp

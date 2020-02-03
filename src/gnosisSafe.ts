@@ -36,6 +36,7 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
     )
   )
   notification.transactionHash = event.transaction.hash.toHexString()
+  notification.safeAddress = event.address.toHexString()
   notification.safe = event.address.toHexString()
   notification.type = 'OWNERSHIP'
   notification.time = event.block.timestamp
@@ -58,6 +59,7 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
     )
   )
   notification.transactionHash = event.transaction.hash.toHexString()
+  notification.safeAddress = event.address.toHexString()
   notification.safe = event.address.toHexString()
   notification.type = 'OWNERSHIP'
   notification.time = event.block.timestamp

@@ -80,7 +80,8 @@ type OwnershipChange implements Event @entity {
 
 type Notification implements Event @entity {
   id: ID!
-  safe: Safe!
+  safeAddress: String!
+  safe: Safe
   type: NotificationType!
   time: BigInt!
   transactionHash: String!
