@@ -40,8 +40,10 @@ type Signup implements Event @entity {
 
 type Trust implements Event @entity {
   id: ID!
-  canSendTo: Safe!
-  user: Safe!
+  canSendToAddress: String!
+  canSendTo: Safe
+  userAddress: String!
+  user: Safe
   limit: BigInt!
   limitPercentage: BigInt!
 }
