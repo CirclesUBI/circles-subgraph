@@ -11,6 +11,7 @@ type Token @entity {
 type User @entity {
   id: ID!
   safe: Safe!
+  safeAddress: String!
 }
 
 type Safe @entity {
@@ -80,8 +81,8 @@ type OwnershipChange implements Event @entity {
 
 type Notification implements Event @entity {
   id: ID!
-  safeAddress: String!
   safe: Safe
+  safeAddress: String!
   type: NotificationType!
   time: BigInt!
   transactionHash: String!

@@ -22,6 +22,7 @@ import {
 export function handleAddedOwner(event: AddedOwnerEvent): void {
   let user = new User(event.params.owner.toHexString())
   user.safe = event.address.toHexString()
+  user.safeAddress = event.address.toHexString()
   user.save()
 
   let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
