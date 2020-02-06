@@ -6,7 +6,8 @@
     "build": "./scripts/build.sh",
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "start": "npm run codegen && npm run build && npm run create && npm run deploy"
   },
   "repository": {
     "type": "git",
