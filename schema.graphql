@@ -54,6 +54,7 @@ type ProxyCreation implements Event @entity {
 }
 
 enum NotificationType {
+  HUB_TRANSFER
   OWNERSHIP
   TRANSFER
   TRUST
