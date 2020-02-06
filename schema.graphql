@@ -54,6 +54,7 @@ type ProxyCreation implements Event @entity {
 }
 
 enum NotificationType {
+  HUB_TRANSFER
   OWNERSHIP
   TRANSFER
   TRUST
@@ -67,6 +68,13 @@ type TrustChange implements Event @entity {
 }
 
 type Transfer implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+
+type HubTransfer implements Event @entity {
   id: ID!
   from: String!
   to: String!
@@ -88,5 +96,6 @@ type Notification implements Event @entity {
   transactionHash: String!
   trust: TrustChange
   transfer: Transfer
+  hubTransfer: HubTransfer
   ownership: OwnershipChange
 }
