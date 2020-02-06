@@ -6,11 +6,13 @@ import {
 
 import {
   Hub as HubContract,
+  HubTransfer as HubTransferEvent,
   Signup as SignupEvent,
   Trust as TrustEvent,
 } from './types/Hub/Hub'
 
 import {
+  HubTransfer,
   Notification,
   Signup,
   Token,
@@ -98,4 +100,42 @@ export function handleTrust(event: TrustEvent): void {
   }
   trustEvent.limitPercentage = event.params.limit
   trustEvent.save()
+}
+
+export function handleHubTransfer(event: HubTransferEvent): void {
+  let notificationTo = new Notification(
+    createNotificationID(
+      'hub-transfer-to',
+      event.block.number,
+      event.logIndex
+    )
+  )
+  notificationTo.transactionHash = event.transaction.hash.toHexString()
+  notificationTo.safeAddress = event.params.to.toHexString()
+  notificationTo.safe = event.params.to.toHexString()
+  notificationTo.type = 'HUB_TRANSFER'
+  notificationTo.time = event.block.timestamp
+  notificationTo.hubTransfer = createEventID(event.block.number, event.logIndex)
+  notificationTo.save()
+
+  let transfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
+  transfer.from = event.params.from.toHexString()
+  transfer.to = event.params.to.toHexString()
+  transfer.amount = event.params.amount
+  transfer.save()
+
+  let notificationFrom = new Notification(
+    createNotificationID(
+      'transfer-from',
+      event.block.number,
+      event.logIndex
+    )
+  )
+  notificationFrom.transactionHash = event.transaction.hash.toHexString()
+  notificationFrom.safeAddress = event.params.from.toHexString()
+  notificationFrom.safe = event.params.from.toHexString()
+  notificationFrom.type = 'HUB_TRANSFER'
+  notificationFrom.time = event.block.timestamp
+  notificationFrom.hubTransfer = createEventID(event.block.number, event.logIndex)
+  notificationFrom.save()
 }

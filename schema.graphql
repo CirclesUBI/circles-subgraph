@@ -73,6 +73,13 @@ type Transfer implements Event @entity {
   amount: BigInt!
 }
 
+type HubTransfer implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+
 type OwnershipChange implements Event @entity {
   id: ID!
   adds: String
@@ -88,5 +95,6 @@ type Notification implements Event @entity {
   transactionHash: String!
   trust: TrustChange
   transfer: Transfer
+  hubTransfer: HubTransfer
   ownership: OwnershipChange
 }
