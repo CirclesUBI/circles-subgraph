@@ -118,15 +118,15 @@ export function handleHubTransfer(event: HubTransferEvent): void {
   notificationTo.hubTransfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
 
-  let transfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
-  transfer.from = event.params.from.toHexString()
-  transfer.to = event.params.to.toHexString()
-  transfer.amount = event.params.amount
-  transfer.save()
+  let hubTransfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
+  hubTransfer.from = event.params.from.toHexString()
+  hubTransfer.to = event.params.to.toHexString()
+  hubTransfer.amount = event.params.amount
+  hubTransfer.save()
 
   let notificationFrom = new Notification(
     createNotificationID(
-      'transfer-from',
+      'hub-transfer-from',
       event.block.number,
       event.logIndex
     )
