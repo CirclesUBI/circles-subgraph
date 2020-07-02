@@ -11,6 +11,7 @@ type Token @entity {
 type User @entity {
   id: ID!
   safes: [Safe!]!
+  safeAddress: String!
 }
 
 type Safe @entity {
@@ -53,6 +54,7 @@ type ProxyCreation implements Event @entity {
 }
 
 enum NotificationType {
+  HUB_TRANSFER
   OWNERSHIP
   TRANSFER
   TRUST
@@ -72,6 +74,13 @@ type Transfer implements Event @entity {
   amount: BigInt!
 }
 
+type HubTransfer implements Event @entity {
+  id: ID!
+  from: String!
+  to: String!
+  amount: BigInt!
+}
+
 type OwnershipChange implements Event @entity {
   id: ID!
   adds: String
@@ -80,12 +89,13 @@ type OwnershipChange implements Event @entity {
 
 type Notification implements Event @entity {
   id: ID!
-  safeAddress: String!
   safe: Safe
+  safeAddress: String!
   type: NotificationType!
   time: BigInt!
   transactionHash: String!
   trust: TrustChange
   transfer: Transfer
+  hubTransfer: HubTransfer
   ownership: OwnershipChange
 }

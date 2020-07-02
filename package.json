@@ -6,7 +6,8 @@
     "build": "./scripts/build.sh",
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "start": "npm run codegen && npm run build && npm run create && npm run deploy"
   },
   "repository": {
     "type": "git",
@@ -23,10 +24,10 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.17.1",
     "@graphprotocol/graph-ts": "^0.17.0",
-    "truffle": "^5.1.10"
+    "truffle": "^5.1.30"
   },
   "dependencies": {
     "@circles/safe-contracts": "^1.0.6",
-    "circles-contracts": "^1.0.16"
+    "circles-contracts": "^1.0.18"
   }
 }

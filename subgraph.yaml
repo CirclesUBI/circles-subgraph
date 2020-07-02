@@ -16,8 +16,8 @@ dataSources:
       language: wasm/assemblyscript
       file: ./src/hub.ts
       entities:
-        - Token
         - Signup
+        - Token
         - Trust
       abis:
         - name: Hub
@@ -27,6 +27,8 @@ dataSources:
           handler: handleSignup
         - event: Trust(indexed address,indexed address,uint256)
           handler: handleTrust
+        - event: HubTransfer(indexed address,indexed address,uint256)
+          handler: handleHubTransfer
   - name: ProxyFactory
     kind: ethereum/contract
     network: ${SUBGRAPH_NETWORK}
