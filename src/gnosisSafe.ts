@@ -25,9 +25,13 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
     let safes = user.safes
     safes.push(event.address.toHexString())
     user.safes = safes
+    let safeAddresses = user.safeAddresses
+    safeAddresses.push(event.address.toHexString())
+    user.safeAddresses = safeAddresses
   } else {
     user = new User(event.params.owner.toHexString())
     user.safes = [event.address.toHexString()]
+    user.safeAddresses = [event.address.toHexString()]
   }
   user.save()
 
@@ -57,9 +61,14 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
     store.remove('User', event.params.owner.toHex())
   } else {
     let safes = user.safes
+    let safeAddresses = user.safeAddresses
     let index = safes.indexOf(event.address.toHexString())
     safes = safes.splice(index, 1)
     user.safes = safes
+    index = safeAddresses.indexOf(event.address.toHexString())
+    safeAddresses = safeAddresses.splice(index, 1)
+    user.safeAddresses = safeAddresses
+    user.save()
   }
 
   let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))

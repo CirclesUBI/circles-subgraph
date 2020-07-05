@@ -11,7 +11,7 @@ type Token @entity {
 type User @entity {
   id: ID!
   safes: [Safe!]!
-  safeAddress: String!
+  safeAddresses: [String!]
 }
 
 type Safe @entity {
