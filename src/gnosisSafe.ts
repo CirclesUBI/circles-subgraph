@@ -20,9 +20,19 @@ import {
 } from './utils'
 
 export function handleAddedOwner(event: AddedOwnerEvent): void {
-  let user = new User(event.params.owner.toHexString())
-  user.safe = event.address.toHexString()
-  user.safeAddress = event.address.toHexString()
+  let user = User.load(event.params.owner.toHexString())
+  if (user) {
+    let safes = user.safes
+    safes.push(event.address.toHexString())
+    user.safes = safes
+    let safeAddresses = user.safeAddresses
+    safeAddresses.push(event.address.toHexString())
+    user.safeAddresses = safeAddresses
+  } else {
+    user = new User(event.params.owner.toHexString())
+    user.safes = [event.address.toHexString()]
+    user.safeAddresses = [event.address.toHexString()]
+  }
   user.save()
 
   let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
@@ -46,7 +56,20 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
 }
 
 export function handleRemovedOwner(event: RemovedOwnerEvent): void {
-  store.remove('User', event.params.owner.toHex())
+  let user = User.load(event.params.owner.toHexString())
+  if (user.safes.length === 1) {
+    store.remove('User', event.params.owner.toHex())
+  } else {
+    let safes = user.safes
+    let safeAddresses = user.safeAddresses
+    let index = safes.indexOf(event.address.toHexString())
+    safes = safes.splice(index, 1)
+    user.safes = safes
+    index = safeAddresses.indexOf(event.address.toHexString())
+    safeAddresses = safeAddresses.splice(index, 1)
+    user.safeAddresses = safeAddresses
+    user.save()
+  }
 
   let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
   ownership.removes = event.params.owner.toHexString()

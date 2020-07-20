@@ -10,13 +10,13 @@ type Token @entity {
 
 type User @entity {
   id: ID!
-  safe: Safe!
-  safeAddress: String!
+  safes: [Safe!]!
+  safeAddresses: [String!]
 }
 
 type Safe @entity {
   id: ID!
-  owners: [User!]! @derivedFrom(field: "safe")
+  owners: [User!]! @derivedFrom(field: "safes")
   outgoing: [Trust!]! @derivedFrom(field: "user")
   incoming: [Trust!]! @derivedFrom(field: "canSendTo")
   balances: [Balance!]! @derivedFrom(field: "owner")
