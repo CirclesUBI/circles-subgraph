@@ -45,7 +45,7 @@ dataSources:
         - Safe
       abis:
         - name: ProxyFactory
-          file: ./node_modules/@circles/safe-contracts/build/contracts/GnosisSafeProxyFactory.json
+          file: ./node_modules/@circles/safe-contracts/build/contracts/ProxyFactory.json
       eventHandlers:
         - event: ProxyCreation(address)
           handler: handleProxyCreation
