@@ -1,21 +1,16 @@
-type Hub @entity {
-  id: ID! # The namehash of the name
-  owner: Safe!
-}
-
 type Token @entity {
-  id: ID! # The namehash of the name
+  id: ID! # The address of the token
   owner: Safe!
 }
 
 type User @entity {
-  id: ID!
+  id: ID! # The address of the user
   safes: [Safe!]!
   safeAddresses: [String!]
 }
 
 type Safe @entity {
-  id: ID!
+  id: ID! # The address of the safe
   owners: [User!]! @derivedFrom(field: "safes")
   outgoing: [Trust!]! @derivedFrom(field: "user")
   incoming: [Trust!]! @derivedFrom(field: "canSendTo")
@@ -23,7 +18,7 @@ type Safe @entity {
 }
 
 type Balance @entity {
-  id: ID!
+  id: ID! # Concatenation of token address and holder address
   amount: BigInt!
   owner: Safe!
   token: Token!
@@ -34,23 +29,19 @@ interface Event {
 }
 
 type Signup implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of block number and log ID
   safe: String!
   token: String!
 }
 
 type Trust implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of token address, user address and canSendTo address
   canSendToAddress: String!
   canSendTo: Safe
   userAddress: String!
   user: Safe
   limit: BigInt!
   limitPercentage: BigInt!
-}
-
-type ProxyCreation implements Event @entity {
-  id: ID!
 }
 
 enum NotificationType {
@@ -61,34 +52,34 @@ enum NotificationType {
 }
 
 type TrustChange implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of block number and log ID
   canSendTo: String!
   user: String!
   limitPercentage: BigInt!
 }
 
 type Transfer implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of block number and log ID
   from: String!
   to: String!
   amount: BigInt!
 }
 
 type HubTransfer implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of block number and log ID
   from: String!
   to: String!
   amount: BigInt!
 }
 
 type OwnershipChange implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of block number and log ID
   adds: String
   removes: String
 }
 
 type Notification implements Event @entity {
-  id: ID!
+  id: ID! # Concatenation of notification type, block number and log ID
   safe: Safe
   safeAddress: String!
   type: NotificationType!
