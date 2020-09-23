@@ -18,6 +18,7 @@ import {
   Token,
   Trust,
   TrustChange,
+  Safe,
 } from './types/schema'
 
 import {
@@ -44,6 +45,7 @@ export function handleSignup(event: SignupEvent): void {
 }
 
 export function handleTrust(event: TrustEvent): void {
+  // notify the user who is doing the trusting that they were successful
   let notificationCanSendTo = new Notification(
     createNotificationID(
       'trust-from',
@@ -59,6 +61,7 @@ export function handleTrust(event: TrustEvent): void {
   notificationCanSendTo.trust = createEventID(event.block.number, event.logIndex)
   notificationCanSendTo.save()
 
+  // notify the user who has been trusted
   let notificationUser = new Notification(
     createNotificationID(
       'trust-to',
@@ -74,17 +77,34 @@ export function handleTrust(event: TrustEvent): void {
   notificationUser.trust = createEventID(event.block.number, event.logIndex)
   notificationUser.save()
 
+  // store details about the kind of notification for both users
   let trustChange = new TrustChange(createEventID(event.block.number, event.logIndex))
   trustChange.canSendTo = event.params.canSendTo.toHexString()
   trustChange.user = event.params.user.toHexString()
   trustChange.limitPercentage = event.params.limit
   trustChange.save()
 
+  // load the safe of the user doing the trusting
+  let safe = Safe.load(event.params.canSendTo.toHexString())
+  let incoming = safe.incomingAddresses
+
   if (event.params.limit === new BigInt(0)) {
+    // if this is actually an 'untrust', remote the connection from the trust graph
     store.remove('Trust', createTrustID(event.params.user, event.params.user, event.params.canSendTo))
+    // also remote the person trusted from the incomingAddresses array
+    let index = incoming.indexOf(event.params.user.toHexString())
+    incoming = incoming.splice(index, 1)
+    safe.incomingAddresses = incoming
     return
+  } else {
+    // add a record of the person trusted as to the incomingAddresses array
+    incoming.push(event.params.user.toHexString())
+    safe.incomingAddresses = incoming
   }
 
+  safe.save()
+
+  // store the connection in the trust graph
   let trustEvent = new Trust(createTrustID(event.params.user, event.params.user, event.params.canSendTo))
   trustEvent.canSendTo = event.params.canSendTo.toHexString()
   trustEvent.canSendToAddress = event.params.canSendTo.toHexString()
