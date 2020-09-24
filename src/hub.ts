@@ -95,14 +95,15 @@ export function handleTrust(event: TrustEvent): void {
     let index = incoming.indexOf(event.params.user.toHexString())
     incoming = incoming.splice(index, 1)
     safe.incomingAddresses = incoming
+    safe.save()
+    // no need to save the trust event if this was actually an 'untrust' - return here
     return
   } else {
     // add a record of the person trusted as to the incomingAddresses array
     incoming.push(event.params.user.toHexString())
     safe.incomingAddresses = incoming
+    safe.save()
   }
-
-  safe.save()
 
   // store the connection in the trust graph
   let trustEvent = new Trust(createTrustID(event.params.user, event.params.user, event.params.canSendTo))
