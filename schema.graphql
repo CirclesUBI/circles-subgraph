@@ -14,7 +14,7 @@ type Safe @entity {
   owners: [User!]! @derivedFrom(field: "safes")
   outgoing: [Trust!]! @derivedFrom(field: "user") # All the paths tokens can travel from this user
   incoming: [Trust!]! @derivedFrom(field: "canSendTo") # All the paths tokens can travel to this user
-  incomingAddresses: [String!]
+  incomingAddresses: [String!]!
   balances: [Balance!]! @derivedFrom(field: "owner")
 }
 
@@ -83,7 +83,7 @@ type Notification implements Event @entity {
   id: ID! # Concatenation of notification type, block number and log ID
   safe: Safe
   safeAddress: String!
-  type: NotificationType!
+  type: NotificationType! # One of the fields trust, transfer, hubTransfer, or ownership will be populated based on notification type
   time: BigInt!
   transactionHash: String!
   trust: TrustChange

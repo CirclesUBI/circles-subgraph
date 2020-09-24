@@ -123,6 +123,7 @@ export function handleTrust(event: TrustEvent): void {
 }
 
 export function handleHubTransfer(event: HubTransferEvent): void {
+  // notify the user receiving the transfer
   let notificationTo = new Notification(
     createNotificationID(
       'hub-transfer-to',
@@ -137,13 +138,15 @@ export function handleHubTransfer(event: HubTransferEvent): void {
   notificationTo.time = event.block.timestamp
   notificationTo.hubTransfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
-
+  
+  // store the details about the kind of notification for both users
   let hubTransfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
   hubTransfer.from = event.params.from.toHexString()
   hubTransfer.to = event.params.to.toHexString()
   hubTransfer.amount = event.params.amount
   hubTransfer.save()
 
+  // notify the user sending the transfer
   let notificationFrom = new Notification(
     createNotificationID(
       'hub-transfer-from',
