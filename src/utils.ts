@@ -22,7 +22,7 @@ export function createNotificationID(
   )
 }
 
-export function createBalanceID(from: Address, to: Address): string {
-  return from.toHexString().concat('-').concat(to.toHexString())
+export function createBalanceID(token: Address, holder: Address): string {
+  return token.toHexString().concat('-').concat(holder.toHexString())
 }
 

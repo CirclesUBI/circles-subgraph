@@ -20,6 +20,7 @@ import {
   Token,
   Transfer,
   Trust,
+  Safe,
 } from './types/schema'
 
 import {
@@ -30,6 +31,7 @@ import {
 } from './utils'
 
 export function handleTransfer(event: TransferEvent): void {
+  // notify the person receiving the transfer
   let notificationTo = new Notification(
     createNotificationID(
       'transfer-to',
@@ -44,7 +46,8 @@ export function handleTransfer(event: TransferEvent): void {
   notificationTo.time = event.block.timestamp
   notificationTo.transfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
-
+  
+  // store details about the transfer for both users
   let transfer = new Transfer(createEventID(event.block.number, event.logIndex))
   transfer.from = event.params.from.toHexString()
   transfer.to = event.params.to.toHexString()
@@ -53,19 +56,23 @@ export function handleTransfer(event: TransferEvent): void {
 
   let tokenContract = TokenContract.bind(event.address)
 
+  // update the balance of the receiver
   let balTo = new Balance(createBalanceID(event.address, event.params.to))
   balTo.owner = event.params.to.toHex()
   balTo.token = event.address.toHex()
   balTo.amount = tokenContract.balanceOf(event.params.to)
   balTo.save()
 
+  // if the transfer was not a ubi payout
   if (event.params.from.toHexString() != '0x0000000000000000000000000000000000000000') {
+    // also update the balance of the sender
     let balFrom = new Balance(createBalanceID(event.address, event.params.from))
     balFrom.owner = event.params.from.toHex()
     balFrom.token = event.address.toHex()
     balFrom.amount = tokenContract.balanceOf(event.params.from)
     balFrom.save()
 
+    // also notify the sender
     let notificationFrom = new Notification(
       createNotificationID(
         'transfer-from',
@@ -82,26 +89,53 @@ export function handleTransfer(event: TransferEvent): void {
     notificationFrom.save()
   }
 
+  // update all relevant trust limits
   updateMaxTrust(event.params.to, event.params.from, event.address)
 }
 
 function updateMaxTrust(canSendTo: Address, user: Address, token: Address): void {
   let tokenContract = TokenContract.bind(token)
   let tokenOwner = tokenContract.owner()
-
-  let trust = Trust.load(createTrustID(tokenOwner, user, canSendTo))
-
-  if (!trust) {
-    return
-  }
-
   let hubAddress = tokenContract.hub()
   let hub = HubContract.bind(hubAddress)
-  let callResult = hub.try_checkSendLimit(tokenOwner, user, canSendTo)
-  if (callResult.reverted) {
-    trust.limit = new BigInt(0)
-  } else {
-    trust.limit = callResult.value
+
+  // user has sent some of their own tokens, user is the transaction sender
+  if (user == tokenOwner) {
+    let safe = Safe.load(user.toHexString())
+    for (let i = 0; i < safe.incomingAddresses.length; i++) {
+      let incomingAddresses = safe.incomingAddresses
+      // find all the edges where tokens can come to this safe, and update them
+      let trust = Trust.load(createTrustID(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo))
+      if (!trust) {
+        continue
+      }
+      let callResult = hub.try_checkSendLimit(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo)
+      if (callResult.reverted) {
+        trust.limit = new BigInt(0)
+      } else {
+        trust.limit = callResult.value
+      }
+      trust.save()
+    }
   }
-  trust.save()
+ 
+  // canSendTo has received their own tokens, canSendTo is the transaction receiver
+  if (canSendTo == tokenOwner) {
+    let safe = Safe.load(canSendTo.toHexString())
+    for (let i = 0; i < safe.incomingAddresses.length; i++) {
+      let incomingAddresses = safe.incomingAddresses
+      // find all the edges where tokens can come to this safe, and update them
+      let trust = Trust.load(createTrustID(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo))
+      if (!trust) {
+        continue
+      }
+      let callResult = hub.try_checkSendLimit(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo)
+      if (callResult.reverted) {
+        trust.limit = new BigInt(0)
+      } else {
+        trust.limit = callResult.value
+      }
+      trust.save()
+    }
+  }
 }
