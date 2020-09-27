@@ -105,11 +105,12 @@ function updateMaxTrust(canSendTo: Address, user: Address, token: Address): void
     for (let i = 0; i < safe.incomingAddresses.length; i++) {
       let incomingAddresses = safe.incomingAddresses
       // find all the edges where tokens can come to this safe, and update them
-      let trust = Trust.load(createTrustID(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo))
+      // this safe now accepts more/less of the tokens of every safe they trust
+      let trust = Trust.load(createTrustID(Address.fromString(incomingAddresses[i]), Address.fromString(incomingAddresses[i]), user))
       if (!trust) {
         continue
       }
-      let callResult = hub.try_checkSendLimit(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo)
+      let callResult = hub.try_checkSendLimit(Address.fromString(incomingAddresses[i]), Address.fromString(incomingAddresses[i]), user)
       if (callResult.reverted) {
         trust.limit = new BigInt(0)
       } else {
@@ -125,11 +126,12 @@ function updateMaxTrust(canSendTo: Address, user: Address, token: Address): void
     for (let i = 0; i < safe.incomingAddresses.length; i++) {
       let incomingAddresses = safe.incomingAddresses
       // find all the edges where tokens can come to this safe, and update them
-      let trust = Trust.load(createTrustID(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo))
+      // this safe now accepts more/less of the tokens of every safe they trust
+      let trust = Trust.load(createTrustID(Address.fromString(incomingAddresses[i]), Address.fromString(incomingAddresses[i]), canSendTo))
       if (!trust) {
         continue
       }
-      let callResult = hub.try_checkSendLimit(tokenOwner, Address.fromString(incomingAddresses[i]), canSendTo)
+      let callResult = hub.try_checkSendLimit(Address.fromString(incomingAddresses[i]), Address.fromString(incomingAddresses[i]), canSendTo)
       if (callResult.reverted) {
         trust.limit = new BigInt(0)
       } else {
