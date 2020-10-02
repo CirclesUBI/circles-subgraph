@@ -14,7 +14,7 @@ type Safe @entity {
   owners: [User!]! @derivedFrom(field: "safes")
   outgoing: [Trust!]! @derivedFrom(field: "user") # All the paths tokens can travel from this user
   incoming: [Trust!]! @derivedFrom(field: "canSendTo") # All the paths tokens can travel to this user
-  incomingAddresses: [String!]!
+  outgoingAddresses: [String!]!
   balances: [Balance!]! @derivedFrom(field: "owner")
 }
 
