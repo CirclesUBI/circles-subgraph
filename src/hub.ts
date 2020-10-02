@@ -102,11 +102,11 @@ export function handleTrust(event: TrustEvent): void {
     // add a record of the person trusted as to the outgoingAddresses array
     // if it isn't already there
     let index = outgoing.indexOf(event.params.canSendTo.toHexString())
-    if (index == -1) {
+    // if (index == -1) {
       outgoing.push(event.params.canSendTo.toHexString())
       safe.outgoingAddresses = outgoing
       safe.save()
-    }
+    // }
   }
 
   // store the connection in the trust graph
