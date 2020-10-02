@@ -92,7 +92,7 @@ export function handleTrust(event: TrustEvent): void {
     // if this is actually an 'untrust', remote the connection from the trust graph
     store.remove('Trust', createTrustID(event.params.user, event.params.user, event.params.canSendTo))
     // also remote the person trusted from the outgoingAddresses array
-    let index = outgoing.indexOf(event.params.canSendTo.toHexString())
+    let index = outgoing.indexOf(event.params.user.toHexString())
     outgoing = outgoing.splice(index, 1)
     safe.outgoingAddresses = outgoing
     safe.save()
@@ -101,12 +101,12 @@ export function handleTrust(event: TrustEvent): void {
   } else {
     // add a record of the person trusted as to the outgoingAddresses array
     // if it isn't already there
-    let index = outgoing.indexOf(event.params.canSendTo.toHexString())
-    // if (index == -1) {
-      outgoing.push(event.params.canSendTo.toHexString())
+    let index = outgoing.indexOf(event.params.user.toHexString())
+    if (index === -1) {
+      outgoing.push(event.params.user.toHexString())
       safe.outgoingAddresses = outgoing
       safe.save()
-    // }
+    }
   }
 
   // store the connection in the trust graph
