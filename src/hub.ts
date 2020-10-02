@@ -100,9 +100,13 @@ export function handleTrust(event: TrustEvent): void {
     return
   } else {
     // add a record of the person trusted as to the incomingAddresses array
-    incoming.push(event.params.user.toHexString())
-    safe.incomingAddresses = incoming
-    safe.save()
+    // if it isn't already there
+    let index = incoming.indexOf(event.params.user.toHexString())
+    if (index == -1) {
+      incoming.push(event.params.user.toHexString())
+      safe.incomingAddresses = incoming
+      safe.save()
+    }
   }
 
   // store the connection in the trust graph
