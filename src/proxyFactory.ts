@@ -14,6 +14,6 @@ export function handleProxyCreation(event: ProxyCreationEvent): void {
   GnosisSafeContract.create(event.params.proxy)
 
   let safe = new Safe(event.params.proxy.toHex())
-  safe.incomingAddresses = new Array<string>();
+  safe.outgoingAddresses = new Array<string>();
   safe.save()
 }
