@@ -18,5 +18,6 @@ export function handleProxyCreation(event: ProxyCreationEvent): void {
     safe = new Safe(event.params.proxy.toHex())
     safe.outgoingAddresses = new Array<string>();
   }
+  safe.deployed = true;
   safe.save()
 }
