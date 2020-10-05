@@ -86,7 +86,7 @@ export function handleTrust(event: TrustEvent): void {
 
   // load the safe of the user being trusted
   let safe = Safe.load(event.params.user.toHexString())
-  if (!safe) {
+  if (!safe.outgoingAddresses) {
     safe.outgoingAddresses = new Array<string>()
   }
   let outgoing = safe.outgoingAddresses
