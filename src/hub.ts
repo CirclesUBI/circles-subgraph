@@ -8,6 +8,7 @@ import {
   Hub as HubContract,
   HubTransfer as HubTransferEvent,
   Signup as SignupEvent,
+  OrganizationSignup as OrganizationSignupEvent,
   Trust as TrustEvent,
 } from './types/Hub/Hub'
 
@@ -15,6 +16,7 @@ import {
   HubTransfer,
   Notification,
   Signup,
+  OrganizationSignup,
   Token,
   Trust,
   TrustChange,
@@ -39,9 +41,23 @@ export function handleSignup(event: SignupEvent): void {
   signupEvent.token = event.params.token.toHex()
   signupEvent.save()
 
+  let safe = Safe.load(event.params.user.toHex())
+  safe.organization = false
+  safe.save()
+
   let token = new Token(event.params.token.toHex())
   token.owner = event.params.user.toHex()
   token.save()
+}
+
+export function handleOrganizationSignup(event: OrganizationSignupEvent): void {
+  let organizationSignupEvent = new OrganizationSignup(createEventID(event.block.number, event.logIndex))
+  organizationSignupEvent.safe = event.params.organization.toHex()
+  organizationSignupEvent.save()
+
+  let safe = Safe.load(event.params.organization.toHex())
+  safe.organization = true
+  safe.save()
 }
 
 export function handleTrust(event: TrustEvent): void {

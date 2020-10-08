@@ -25,6 +25,8 @@ dataSources:
       eventHandlers:
         - event: Signup(indexed address,address)
           handler: handleSignup
+        - event: OrganizationSignup(indexed address)
+          handler: handleOrganizationSignup
         - event: Trust(indexed address,indexed address,uint256)
           handler: handleTrust
         - event: HubTransfer(indexed address,indexed address,uint256)
