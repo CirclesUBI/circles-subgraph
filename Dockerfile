@@ -4,15 +4,15 @@ WORKDIR /usr/src/subgraph
 
 # Install dependencies
 RUN apt-get update \
-    && apt-get install -y gettext-base
+    && apt-get install -y gettext-base git
 
 # Copy project
 COPY . .
 
-# Install npm dependencies
+# Install NodeJS dependencies
 RUN npm install
 
-# Copy runtime scripts into root
+# Copy runtime script to root
 COPY scripts/run.sh .
 
 CMD ["./run.sh"]
