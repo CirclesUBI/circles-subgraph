@@ -9,10 +9,8 @@ RUN apt-get update \
 # Copy project
 COPY . .
 
-# Install npm dependencies and prepare subgraph
-RUN npm install \
-    && npm run codegen \
-    && npm run build
+# Install npm dependencies
+RUN npm install
 
 # Copy runtime scripts into root
 COPY scripts/run.sh .
