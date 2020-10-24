@@ -11,4 +11,6 @@ RUN npm install \
     && npm run codegen \
     && npm run build
 
-CMD ["npm run create", "npm run deploy"]
+COPY scripts/run.sh .
+
+CMD ["./run.sh"]
