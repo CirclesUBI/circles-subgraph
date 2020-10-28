@@ -1,6 +1,6 @@
 {
   "name": "circles-subgraph",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
     "build": "./scripts/build.sh",
