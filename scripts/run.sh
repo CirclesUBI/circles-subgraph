@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Build and deploy subgraph to graph node
 npm run codegen
