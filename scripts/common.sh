@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Configuration
 env_file=".env"
