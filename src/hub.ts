@@ -56,6 +56,11 @@ export function handleOrganizationSignup(event: OrganizationSignupEvent): void {
   organizationSignupEvent.save()
 
   let safe = Safe.load(event.params.organization.toHex())
+  if (!safe) {
+    safe = new Safe(event.params.organization.toHexString())
+    safe.outgoingAddresses = new Array<string>()
+    safe.deployed = false
+  }
   safe.organization = true
   safe.save()
 }
