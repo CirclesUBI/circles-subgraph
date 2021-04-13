@@ -16,4 +16,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Removed send limits [#41](https://github.com/CirclesUBI/circles-subgraph/pull/41)
+- `BREAKING CHANGE` Removed send limits [#41](https://github.com/CirclesUBI/circles-subgraph/pull/41)
