@@ -121,14 +121,6 @@ export function handleTrust(event: TrustEvent): void {
   trustEvent.canSendToAddress = event.params.canSendTo.toHexString()
   trustEvent.user = event.params.user.toHexString()
   trustEvent.userAddress = event.params.user.toHexString()
-
-  let hub = HubContract.bind(event.address)
-  let callResult = hub.try_checkSendLimit(event.params.user, event.params.user, event.params.canSendTo)
-  if (callResult.reverted) {
-    trustEvent.limit = new BigInt(0)
-  } else {
-    trustEvent.limit = callResult.value
-  }
   trustEvent.limitPercentage = event.params.limit
   trustEvent.save()
 }

@@ -42,7 +42,7 @@ type Trust implements Event @entity {
   canSendTo: Safe # The safe who is doing the trusting, ie. when I trust you, you can send to me
   userAddress: String!
   user: Safe # The safe who is receiving trust
-  limit: BigInt! # The amount in freckles that can currently be sent along this edge - this changes with transactions
+  limit: BigInt # The amount in freckles that can currently be sent along this edge - this changes with transactions
   limitPercentage: BigInt! # The amount of trust, expressed as a percentage - this only changes when a user adjusts it
 }
 
