@@ -10,6 +10,7 @@ dataSources:
     source:
       address: "${HUB_ADDRESS}"
       abi: Hub
+      startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -25,6 +26,8 @@ dataSources:
       eventHandlers:
         - event: Signup(indexed address,address)
           handler: handleSignup
+        - event: OrganizationSignup(indexed address)
+          handler: handleOrganizationSignup
         - event: Trust(indexed address,indexed address,uint256)
           handler: handleTrust
         - event: HubTransfer(indexed address,indexed address,uint256)
@@ -35,6 +38,7 @@ dataSources:
     source:
       address: "${PROXY_FACTORY_ADDRESS}"
       abi: ProxyFactory
+      startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -92,4 +96,3 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-

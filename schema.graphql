@@ -12,6 +12,7 @@ type User @entity {
 type Safe @entity {
   id: ID! # The address of the safe
   deployed: Boolean
+  organization: Boolean
   owners: [User!]! @derivedFrom(field: "safes")
   outgoing: [Trust!]! @derivedFrom(field: "user") # All the paths tokens can travel from this user
   incoming: [Trust!]! @derivedFrom(field: "canSendTo") # All the paths tokens can travel to this user
@@ -34,6 +35,11 @@ type Signup implements Event @entity {
   id: ID! # Concatenation of block number and log ID
   safe: String!
   token: String!
+}
+
+type OrganizationSignup implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  safe: String!
 }
 
 type Trust implements Event @entity {
