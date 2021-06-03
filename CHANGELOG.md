@@ -12,8 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Organization events [#32](https://github.com/CirclesUBI/circles-subgraph/pull/32)
-- Introduce new `START_BLOCK` environment variable
+- :warning: Introduce new `START_BLOCK` environment variable
 
 ### Changed
 
-- `BREAKING CHANGE` Removed send limits [#41](https://github.com/CirclesUBI/circles-subgraph/pull/41)
+- :warning: **BREAKING CHANGE** Removed send limits [#41](https://github.com/CirclesUBI/circles-subgraph/pull/41)
