@@ -116,11 +116,11 @@ export function handleTrust(event: TrustEvent): void {
   let outgoing = safe.outgoingAddresses
 
   if (event.params.limit === new BigInt(0)) {
-    // if this is actually an 'untrust', remote the connection from the trust graph
+    // if this is actually an 'untrust', remove the connection from the trust graph
     store.remove('Trust', createTrustID(event.params.user, event.params.user, event.params.canSendTo))
-    // also remote the person doing the trusting from the outgoingAddresses array
+    // also remove the person doing the trusting from the outgoingAddresses array
     let index = outgoing.indexOf(event.params.canSendTo.toHexString())
-    outgoing = outgoing.splice(index, 1)
+    outgoing.splice(index, 1)
     safe.outgoingAddresses = outgoing
     safe.save()
     // no need to save the trust event if this was actually an 'untrust' - return here
@@ -162,7 +162,7 @@ export function handleHubTransfer(event: HubTransferEvent): void {
   notificationTo.time = event.block.timestamp
   notificationTo.hubTransfer = createEventID(event.block.number, event.logIndex)
   notificationTo.save()
-  
+
   // store the details about the kind of notification for both users
   let hubTransfer = new HubTransfer(createEventID(event.block.number, event.logIndex))
   hubTransfer.from = event.params.from.toHexString()

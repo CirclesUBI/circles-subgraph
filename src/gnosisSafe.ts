@@ -61,12 +61,12 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
     store.remove('User', event.params.owner.toHex())
   } else {
     let safes = user.safes
-    let safeAddresses = user.safeAddresses
     let index = safes.indexOf(event.address.toHexString())
-    safes = safes.splice(index, 1)
+    safes.splice(index, 1)
     user.safes = safes
+    let safeAddresses = user.safeAddresses
     index = safeAddresses.indexOf(event.address.toHexString())
-    safeAddresses = safeAddresses.splice(index, 1)
+    safeAddresses.splice(index, 1)
     user.safeAddresses = safeAddresses
     user.save()
   }
