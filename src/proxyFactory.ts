@@ -16,8 +16,9 @@ export function handleProxyCreation(event: ProxyCreationEvent): void {
   let safe = Safe.load(event.params.proxy.toHex())
   if (!safe) {
     safe = new Safe(event.params.proxy.toHex())
-    safe.outgoingAddresses = new Array<string>();
+    safe.outgoingAddresses = new Array<string>()
   }
-  safe.deployed = true;
+  safe.deployed = true
+  safe.organization = false
   safe.save()
 }
