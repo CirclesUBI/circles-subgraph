@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2021-06-03
+
+### Fixed
+
+- Correctly set `organization` boolean when Safe got freshly created [#46](https://github.com/CirclesUBI/circles-subgraph/pull/46)
+- Removing an owner from Safe was deleting the wrong Safe entry [#45](https://github.com/CirclesUBI/circles-subgraph/pull/45)
+
 ## [1.0.0] - 2021-04-13
 
 ### Added
