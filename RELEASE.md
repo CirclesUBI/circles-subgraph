@@ -1,4 +1,4 @@
-# Releasing `circles-core`
+# Releasing `circles-subgraph`
 
 Use this checklist to create a new release of `circles-subgraph` and deploy the subgraph to the official The Graph node. All steps are intended to be run from the root directory of the repository.
 
