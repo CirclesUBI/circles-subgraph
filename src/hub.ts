@@ -42,6 +42,11 @@ export function handleSignup(event: SignupEvent): void {
   signupEvent.save()
 
   let safe = Safe.load(event.params.user.toHex())
+  if (!safe) {
+    safe = new Safe(event.params.user.toHex())
+    safe.outgoingAddresses = new Array<string>()
+    safe.deployed = false // should this be true or false? Should only be true when handleProxyCreation()?
+  }
   safe.organization = false
   safe.save()
 
