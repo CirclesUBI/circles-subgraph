@@ -4,12 +4,21 @@
 env_file=".env"
 manifest_file=subgraph.yaml
 manifest_tmp_file="$PWD/.subgraph.tmp.yaml"
+package_json_file="package.json"
 
 # Export environment variables from a file
 export_env() {
   if [ -f "$env_file" ]; then
     set -a
     source $env_file
+  fi
+}
+
+# Export subgraph version from package.json
+get_version() {
+  if [ -f "$package_json_file" ]; then
+    set -a
+    SUBGRAPH_VERSION=v$(jq .version package.json | tr -d '"')
   fi
 }
 
