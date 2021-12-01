@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2021-12-01
+
+### Fixed
+
+- Add `version-label` option to `graph deploy` command [#56](https://github.com/CirclesUBI/circles-subgraph/pull/56)
+
 ## [1.1.0] - 2021-12-01
 
 ### Changed
