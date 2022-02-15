@@ -75,16 +75,10 @@ export function handleTransfer(event: TransferEvent): void {
     // also update the balance of the sender
     let balFrom = Balance.load(createBalanceID(event.address, event.params.from))
 
-    if (balFrom == null) {
-      balFrom = new Balance(createBalanceID(event.address, event.params.from))
-      balFrom.owner = event.params.to.toHex()
-      balFrom.token = event.address.toHex()
-      balFrom.amount = event.params.value
-    } else {
+    if (balFrom !== null) {
       balFrom.amount = balFrom.amount - event.params.value
+      balFrom.save()
     }
-
-    balFrom.save()
 
     // also notify the sender
     let notificationFrom = new Notification(
