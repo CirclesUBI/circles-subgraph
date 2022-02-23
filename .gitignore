@@ -6,7 +6,7 @@
 .subgraph.tmp.yaml
 .env
 .env-xdai
-.env-kovan
+.env-poa-sokol
 
 # Graph cli generated
 src/types

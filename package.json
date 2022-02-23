@@ -7,7 +7,9 @@
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
     "deploy": "./scripts/deploy.sh",
-    "start": "npm run codegen && npm run build && npm run create && npm run deploy"
+    "start": "npm run codegen && npm run build && npm run create && npm run deploy",
+    "prepare:xdai": "cp .env-xdai .env",
+    "prepare:poa-sokol": "cp .env-poa-sokol .env"
   },
   "repository": {
     "type": "git",
@@ -15,7 +17,8 @@
   },
   "contributors": [
     "ana0",
-    "adzialocha"
+    "adzialocha",
+    "llunaCreixent"
   ],
   "license": "AGPL-3.0",
   "bugs": {

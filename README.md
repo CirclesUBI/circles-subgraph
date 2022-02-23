@@ -47,7 +47,7 @@
 
 Circles subgraph for [`The Graph`] to fastly query available data in the Circles UBI ecosystem. You can play with GraphQL queries running against the current Circles data in the Graph [`explorer`].
 
-[`The Graph`]: https://thegraph.com
+[`the graph`]: https://thegraph.com
 [`explorer`]: https://thegraph.com/explorer/subgraph/circlesubi/circles
 
 ## Development
@@ -70,4 +70,4 @@ npm run deploy
 
 GNU Affero General Public License v3.0 [`AGPL-3.0`]
 
-[`AGPL-3.0`]: https://github.com/CirclesUBI/circles-subgraph/blob/main/LICENSE
+[`agpl-3.0`]: https://github.com/CirclesUBI/circles-subgraph/blob/main/LICENSE
