@@ -1,7 +1,6 @@
 import {
   Address,
   BigInt,
-  store,
 } from '@graphprotocol/graph-ts'
 
 export function createTrustID(token: Address, user: Address, canSendTo: Address): string {

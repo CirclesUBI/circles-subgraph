@@ -1,11 +1,9 @@
 import {
-  Address,
   BigInt,
   store,
 } from '@graphprotocol/graph-ts'
 
 import {
-  Hub as HubContract,
   HubTransfer as HubTransferEvent,
   Signup as SignupEvent,
   OrganizationSignup as OrganizationSignupEvent,
