@@ -1,33 +1,17 @@
 import {
-  Address,
-  BigInt,
-  store,
-} from '@graphprotocol/graph-ts'
-
-import {
-  Token as TokenContract,
   Transfer as TransferEvent,
 } from './types/templates/Token/Token'
 
 import {
-  Hub as HubContract,
-  Trust as TrustEvent,
-} from './types/Hub/Hub'
-
-import {
   Balance,
   Notification,
-  Token,
   Transfer,
-  Trust,
-  Safe,
 } from './types/schema'
 
 import {
   createBalanceID,
   createEventID,
   createNotificationID,
-  createTrustID,
 } from './utils'
 
 export function handleTransfer(event: TransferEvent): void {
@@ -53,8 +37,6 @@ export function handleTransfer(event: TransferEvent): void {
   transfer.to = event.params.to.toHexString()
   transfer.amount = event.params.value
   transfer.save()
-
-  let tokenContract = TokenContract.bind(event.address)
 
   // update the balance of the receiver
   let balTo = Balance.load(createBalanceID(event.address, event.params.to))
