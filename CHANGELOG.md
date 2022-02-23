@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-02-23
+
+### Fixed
+
+- Update ubuntu version in workflows to ubuntu-18.04
+- Remove unnecessary eth calls
+- Clean code: Remove unused imports and vars
+
+### Added
+
+- Automate configuration for xdai and poa-sokol
+- Add documentation for release for The Graph
+- Update contributors and codeo wners
+
 ## [1.1.1] - 2021-12-01
 
 ### Fixed
