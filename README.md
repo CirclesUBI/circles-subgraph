@@ -59,14 +59,6 @@ npm install
 # Copy env file and edit it according to your needs
 cp .env.example .env
 
-# Or use the example files prepared for xdai and poa-sokol. Note that you have to write your Access Token
-cp .env-xdai.example .env-xdai
-cp .env-poa-sokol.example .env-poa-sokol
-
-# Then you can prepare the configuration from the `.env-xdai` or `.env-poa-sokol` files by running
-npm run prepare:xdai
-npm run prepare:poa-sokol
-
 # Use graph commands
 npm run codegen
 npm run build
