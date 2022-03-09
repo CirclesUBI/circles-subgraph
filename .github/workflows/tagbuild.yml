@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'fix-image-build '
+      - 'fix-image-build'
     tags:
       # strict semver regex
       - v[0-9]+.[0-9]+.[0-9]+
