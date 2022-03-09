@@ -34,6 +34,8 @@ jobs:
         env:
           IMAGE_VERSION: ${{ steps.parse_ref.outputs.tag }}
         run: |
+          echo $IMAGE_VERSION
+          echo ${{ env.IMAGE_VERSION }}
           docker build -t registry.digitalocean.com/circles-registry/subgraph:${IMAGE_VERSION} .
       - name: Registry login
         run: |
