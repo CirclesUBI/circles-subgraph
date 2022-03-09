@@ -26,6 +26,8 @@ jobs:
           doctl auth init -t ${CIRCLES_CI_DO_TOKEN}
       - name: Checkout
         uses: actions/checkout@main
+         with:
+          ref: main
       - name: Get ref
         run: |
           echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
