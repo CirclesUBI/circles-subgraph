@@ -15,4 +15,5 @@ RUN npm install
 # Copy runtime script to root
 COPY scripts/run.sh .
 
+
 CMD ["./run.sh"]
