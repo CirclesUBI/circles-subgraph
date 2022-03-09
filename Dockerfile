@@ -12,7 +12,7 @@ COPY . .
 # Install NodeJS dependencies
 RUN npm install
 
-# Copy runtime script to root
+# Copy runtime script to root   
 COPY scripts/run.sh .
 
 CMD ["./run.sh"]
