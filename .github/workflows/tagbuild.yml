@@ -4,7 +4,7 @@ on:
   push:
     tags:
       # strict semver regex
-      - '*'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 env:
   CIRCLES_CI_DO_TOKEN: ${{ secrets.CIRCLES_CI_DO_TOKEN }}
@@ -25,17 +25,12 @@ jobs:
         uses: actions/checkout@main
       - name: Get ref
         run: |
-          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" 
-          echo ${{ env.RELEASE_VERSION }}
           echo ::set-output name=tag::${GITHUB_REF#refs/*/}
         id: parse_ref
       - name: Docker build and tag
         env:
           IMAGE_VERSION: ${{ steps.parse_ref.outputs.tag }}
         run: |
-          echo $IMAGE_VERSION
-          echo ${{ env.IMAGE_VERSION }}
-           echo ${{ steps.vars.parse_ref.outputs.tag }}
           docker build -t registry.digitalocean.com/circles-registry/subgraph:${IMAGE_VERSION} .
       - name: Registry login
         run: |
