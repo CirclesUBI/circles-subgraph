@@ -26,34 +26,19 @@ jobs:
           doctl auth init -t ${CIRCLES_CI_DO_TOKEN}
       - name: Checkout
         uses: actions/checkout@main
-        with:
-          ref: main
       - name: Get ref
         run: |
           echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" 
-          echo "SOURCE_TAG=${GITHUB_REF/refs\/tags\//}"
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/*/}
-          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/*/}
-          echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
-        id: parse_ref
-      - name: Build base image
-        run: |
-          echo $SOURCE_NAME
-          echo $SOURCE_BRANCH
-          echo $SOURCE_TAG
-          echo $RELEASE_VERSION
           echo ${{ env.RELEASE_VERSION }}
-        env:
-          SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
-          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
-          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        id: parse_ref
       - name: Docker build and tag
         env:
           IMAGE_VERSION: ${{ steps.parse_ref.outputs.tag }}
         run: |
           echo $IMAGE_VERSION
           echo ${{ env.IMAGE_VERSION }}
+           echo ${{ steps.vars.parse_ref.outputs.tag }}
           docker build -t registry.digitalocean.com/circles-registry/subgraph:${IMAGE_VERSION} .
       - name: Registry login
         run: |
