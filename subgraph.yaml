@@ -10,14 +10,15 @@ dataSources:
     source:
       address: "${HUB_ADDRESS}"
       abi: Hub
+      startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/hub.ts
       entities:
-        - Token
         - Signup
+        - Token
         - Trust
       abis:
         - name: Hub
@@ -25,17 +26,22 @@ dataSources:
       eventHandlers:
         - event: Signup(indexed address,address)
           handler: handleSignup
+        - event: OrganizationSignup(indexed address)
+          handler: handleOrganizationSignup
         - event: Trust(indexed address,indexed address,uint256)
           handler: handleTrust
+        - event: HubTransfer(indexed address,indexed address,uint256)
+          handler: handleHubTransfer
   - name: ProxyFactory
     kind: ethereum/contract
     network: ${SUBGRAPH_NETWORK}
     source:
       address: "${PROXY_FACTORY_ADDRESS}"
       abi: ProxyFactory
+      startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.3
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/proxyFactory.ts
       entities:
@@ -55,7 +61,7 @@ templates:
       abi: GnosisSafe
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.1
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/gnosisSafe.ts
       entities:
@@ -76,7 +82,7 @@ templates:
       abi: Token
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.1
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/token.ts
       entities:
@@ -90,4 +96,3 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-

@@ -1,12 +1,15 @@
 {
   "name": "circles-subgraph",
-  "version": "0.1.0",
+  "version": "v1.2.0",
   "description": "Circles UBI subgraph for The Graph",
   "scripts": {
     "build": "./scripts/build.sh",
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "start": "npm run codegen && npm run build && npm run create && npm run deploy",
+    "prepare:xdai": "cp .env-xdai .env",
+    "prepare:poa-sokol": "cp .env-poa-sokol .env"
   },
   "repository": {
     "type": "git",
@@ -14,21 +17,20 @@
   },
   "contributors": [
     "ana0",
-    "adzialocha"
+    "adzialocha",
+    "llunaCreixent"
   ],
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.16.2",
-    "@graphprotocol/graph-ts": "^0.16.0",
-    "truffle": "^5.1.0"
+    "@graphprotocol/graph-cli": "^0.28.0",
+    "@graphprotocol/graph-ts": "^0.23.1",
+    "truffle": "^5.5.3"
   },
   "dependencies": {
-    "@circles/safe-contracts": "^1.0.4",
-    "@types/node": "^12.12.7",
-    "circles-contracts": "^1.0.10",
-    "web3": "^1.2.4"
+    "@circles/safe-contracts": "^1.0.17",
+    "circles-contracts": "^2.3.1"
   }
 }
