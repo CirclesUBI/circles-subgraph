@@ -27,7 +27,7 @@
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.23.2",
     "@graphprotocol/graph-ts": "^0.23.1",
-    "truffle": "^5.4.22"
+    "truffle": "^5.4.33"
   },
   "dependencies": {
     "@circles/safe-contracts": "^1.0.17",
