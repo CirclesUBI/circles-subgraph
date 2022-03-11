@@ -16,3 +16,6 @@ RUN npm install
 COPY scripts/run.sh .
 
 CMD ["./run.sh"]
+
+
+
