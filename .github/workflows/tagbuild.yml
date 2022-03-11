@@ -2,6 +2,8 @@ name: Build docker and upload to registry
 
 on:
   push:
+    branch:
+      - fix-core-build
     tags:
       # strict semver regex
       - '*'
