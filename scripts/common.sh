@@ -1,10 +1,13 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+echo $SCRIPT_DIR
+ls -la $SCRIPT_DIR
 # Configuration
 env_file=".env"
 manifest_file=subgraph.yaml
-cd $SCRIPT_DIR ..
+cd $SCRIPT_DIR 
+cd ..
 CURRENT_DIR=$PWD
 manifest_tmp_file="$CURRENT_DIR/.subgraph.tmp.yaml"
 package_json_file="package.json"
