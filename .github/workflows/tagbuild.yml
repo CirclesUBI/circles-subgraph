@@ -7,6 +7,9 @@ on:
     tags:
       # strict semver regex
       - '*'
+    pull_request:
+    branches:
+      - fix-core-build
 
 env:
   CIRCLES_CI_DO_TOKEN: ${{ secrets.CIRCLES_CI_DO_TOKEN }}
