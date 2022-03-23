@@ -1,8 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-echo $SCRIPT_DIR
-ls -la $SCRIPT_DIR
+
 # Configuration
 env_file=".env"
 manifest_file=subgraph.yaml
