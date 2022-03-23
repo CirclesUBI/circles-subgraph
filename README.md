@@ -71,4 +71,3 @@ npm run deploy
 GNU Affero General Public License v3.0 [`AGPL-3.0`]
 
 [`agpl-3.0`]: https://github.com/CirclesUBI/circles-subgraph/blob/main/LICENSE
-
