@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix previous tagbuild GH Action
+
+## [1.2.1] - 2022-03-10
+
+### Fixed
+
 - Fix tagbuild GH Action
 
 ### Changed
