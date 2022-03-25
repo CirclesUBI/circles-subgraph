@@ -1,10 +1,14 @@
 #!/bin/bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # Configuration
 env_file=".env"
 manifest_file=subgraph.yaml
-manifest_tmp_file="$SCRIPT_DIR/.subgraph.tmp.yaml"
+cd $SCRIPT_DIR 
+cd ..
+CURRENT_DIR=$PWD
+manifest_tmp_file="$CURRENT_DIR/.subgraph.tmp.yaml"
 package_json_file="package.json"
 
 # Export environment variables from a file
