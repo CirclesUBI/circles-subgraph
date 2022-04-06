@@ -23,7 +23,7 @@ export_env() {
 get_version() {
   if [ -f "$package_json_file" ]; then
     set -a
-    SUBGRAPH_VERSION=v$(jq .version package.json | tr -d '"')
+    SUBGRAPH_VERSION=v$(grep -A0 "version" $package_json_file |  awk -F\" '{print $4}')
   fi
 }
 
