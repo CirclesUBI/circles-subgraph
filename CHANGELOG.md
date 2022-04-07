@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.3] - 2022-04-07
+
+### Fixed
+
+- Removed jq from common.sh
+
 ## [1.2.2] - 2022-03-25
 
 ### Fixed
