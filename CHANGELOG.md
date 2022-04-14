@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0] - 2022-04-14
 
+### Fixed
+
+- Removed jq from common.sh  [#73](https://github.com/CirclesUBI/circles-subgraph/pull/73)
 ### Changed
 
-Update dependencies (including nested): graph-cli, graph-ts, minimist, node-fetch, axios and node-forge [#75](https://github.com/CirclesUBI/circles-subgraph/pull/75)
+- Update dependencies (including nested): graph-cli, graph-ts, minimist, node-fetch, axios and node-forge [#75](https://github.com/CirclesUBI/circles-subgraph/pull/75)
 
 
 ## [1.2.3] - 2022-04-07
