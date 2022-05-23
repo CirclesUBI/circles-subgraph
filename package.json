@@ -10,8 +10,9 @@
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
     "deploy": "./scripts/deploy.sh",
-    "start": "./scripts/run.sh",
-    "prepare:xdai": "cp .env-xdai.example .env"
+    "hosted-service-deploy": "./scripts/hosted_service_deploy.sh",
+    "start": "npm run codegen && npm run build && npm run create && npm run deploy",
+    "prepare:xdai": "cp .env-xdai .env"
   },
   "repository": {
     "type": "git",
