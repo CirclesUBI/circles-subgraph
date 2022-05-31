@@ -7,6 +7,7 @@
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
     "deploy": "./scripts/deploy.sh",
+    "hosted-service-deploy": "./scripts/hosted_service_deploy.sh",
     "start": "npm run codegen && npm run build && npm run create && npm run deploy",
     "prepare:xdai": "cp .env-xdai .env",
     "prepare:poa-sokol": "cp .env-poa-sokol .env"
