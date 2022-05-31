@@ -98,3 +98,17 @@ type Notification implements Event @entity {
   hubTransfer: HubTransfer
   ownership: OwnershipChange
 }
+
+type GroupCurrencyToken @entity {
+  id: ID!
+  name: String
+  symbol: String
+  creator: String
+  hub: String
+  owner: String
+  treasury: String
+  mintFeePerThousand: BigInt
+  suspended: Boolean
+  onlyOwnerCanMint: Boolean
+  onlyTrustedCanMint: Boolean
+}

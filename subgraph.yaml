@@ -74,6 +74,28 @@ dataSources:
       eventHandlers:
         - event: ProxyCreation(address)
           handler: handleProxyCreation
+  - name: GroupCurrencyTokenFactory
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      address: "${GROUP_CURRENCY_TOKEN_FACTORY_ADDRESS}"
+      abi: GroupCurrencyTokenFactory
+      startBlock: ${GROUP_CURRENCY_TOKEN_FACTORY_START_BLOCK}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/groupCurrencyToken.ts
+      entities:
+        - GroupCurrencyToken
+      abis:
+        - name: GroupCurrencyTokenFactory
+          file: ./abis/GroupCurrencyTokenFactory.json # TODO: we might need to use this abi from a node_modules
+        - name: GroupCurrencyToken
+          file: ./abis/GroupCurrencyToken.json # TODO: we might need to use this abi from a node_modules
+      eventHandlers:
+        - event: GroupCurrencyTokenCreated(indexed address,indexed address,indexed string)
+          handler: handleGroupCurrencyTokenCreation
 templates:
   - name: GnosisSafe
     kind: ethereum/contract
