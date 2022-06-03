@@ -66,29 +66,139 @@
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "receiver",
+				"name": "_delegatedTrustee",
+				"type": "address"
+			}
+		],
+		"name": "DelegatedTrusteeAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_delegatedTrustee",
+				"type": "address"
+			}
+		],
+		"name": "DelegatedTrusteeRemoved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_memberToken",
+				"type": "address"
+			}
+		],
+		"name": "MemberTokenAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_memberToken",
+				"type": "address"
+			}
+		],
+		"name": "MemberTokenRemoved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_receiver",
 				"type": "address"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "_amount",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "mintAmount",
+				"name": "_mintAmount",
 				"type": "uint256"
 			},
 			{
 				"indexed": false,
 				"internalType": "uint256",
-				"name": "mintFee",
+				"name": "_mintFee",
 				"type": "uint256"
 			}
 		],
 		"name": "Minted",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bool",
+				"name": "_onlyOwnerCanMint",
+				"type": "bool"
+			}
+		],
+		"name": "OnlyOwnerCanMint",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bool",
+				"name": "_onlyTrustedCanMint",
+				"type": "bool"
+			}
+		],
+		"name": "OnlyTrustedCanMint",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_old",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_new",
+				"type": "address"
+			}
+		],
+		"name": "OwnerChanged",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "Suspended",
 		"type": "event"
 	},
 	{
