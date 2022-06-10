@@ -25,9 +25,9 @@
     "url": "https://github.com/CirclesUBI/circles-subgraph/issues"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.29.0",
+    "@graphprotocol/graph-cli": "^0.29.2",
     "@graphprotocol/graph-ts": "^0.26.0",
-    "truffle": "^5.5.9"
+    "truffle": "^5.5.18"
   },
   "dependencies": {
     "@circles/safe-contracts": "^1.0.17",
