@@ -137,3 +137,5 @@ templates:
       eventHandlers:
         - event: MemberTokenAdded(indexed address)
           handler: handleMemberTokenAdded
+        - event: MemberTokenRemoved(indexed address)
+          handler: handleMemberTokenRemoved
