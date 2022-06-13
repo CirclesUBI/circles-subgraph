@@ -1,5 +1,6 @@
 import {
   BigInt,
+  Address,
 } from '@graphprotocol/graph-ts'
 import {
   GroupCurrencyTokenCreated as GroupCurrencyTokenCreatedEvent
@@ -9,25 +10,32 @@ import {
 } from './types/GroupCurrencyTokenFactory/GroupCurrencyToken'
 import { GroupCurrencyToken } from './types/schema'
 
-export function handleGroupCurrencyTokenCreation(event: GroupCurrencyTokenCreatedEvent): void {
-  let groupAddress = event.params._address
-  let groupAddressString = groupAddress.toHex()
-  let creator = event.params._deployer.toHexString()
+export function createGroupCurrencyTokenIfNonExistent(groupAddress: Address): GroupCurrencyToken {
+  let groupAddressString = groupAddress.toHexString()
   let groupCurrencyToken = GroupCurrencyToken.load(groupAddressString)
 
   if (!groupCurrencyToken) {
-    let groupCurrencyTokenInstance = GroupCurrencyTokenContract.bind(groupAddress)
+    // Load Group State from the Contract
+    let GroupCurrencyTokenContractInstance = GroupCurrencyTokenContract.bind(groupAddress)
     groupCurrencyToken = new GroupCurrencyToken(groupAddressString)
-    groupCurrencyToken.name = groupCurrencyTokenInstance.name()
-    groupCurrencyToken.symbol = groupCurrencyTokenInstance.symbol()
-    groupCurrencyToken.creator = creator
-    groupCurrencyToken.hub = groupCurrencyTokenInstance.hub().toHexString()
-    groupCurrencyToken.owner = groupCurrencyTokenInstance.owner().toHexString()
-    groupCurrencyToken.treasury = groupCurrencyTokenInstance.treasury().toHexString()
-    groupCurrencyToken.mintFeePerThousand = BigInt.fromI32(groupCurrencyTokenInstance.mintFeePerThousand())
-    groupCurrencyToken.suspended = false
-    groupCurrencyToken.onlyOwnerCanMint = false
-    groupCurrencyToken.onlyTrustedCanMint = false
+    groupCurrencyToken.name = GroupCurrencyTokenContractInstance.name()
+    groupCurrencyToken.symbol = GroupCurrencyTokenContractInstance.symbol()
+    groupCurrencyToken.hub = GroupCurrencyTokenContractInstance.hub().toHexString()
+    groupCurrencyToken.owner = GroupCurrencyTokenContractInstance.owner().toHexString()
+    groupCurrencyToken.treasury = GroupCurrencyTokenContractInstance.treasury().toHexString()
+    groupCurrencyToken.mintFeePerThousand = BigInt.fromI32(GroupCurrencyTokenContractInstance.mintFeePerThousand())
+    groupCurrencyToken.suspended = GroupCurrencyTokenContractInstance.suspended()
+    groupCurrencyToken.onlyOwnerCanMint = GroupCurrencyTokenContractInstance.onlyOwnerCanMint()
+    groupCurrencyToken.onlyTrustedCanMint = GroupCurrencyTokenContractInstance.onlyTrustedCanMint()
     groupCurrencyToken.save()
   }
+  return groupCurrencyToken
+}
+
+export function handleGroupCurrencyTokenCreation(event: GroupCurrencyTokenCreatedEvent): void {
+  let groupAddress = event.params._address
+  let creator = event.params._deployer.toHexString()
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.creator = creator
+  groupCurrencyToken.save()
 }
