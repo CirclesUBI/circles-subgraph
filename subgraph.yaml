@@ -183,3 +183,11 @@ templates:
           handler: handleMemberTokenAdded
         - event: MemberTokenRemoved(indexed address)
           handler: handleMemberTokenRemoved
+        - event: OnlyOwnerCanMint(indexed bool)
+          handler: handleOnlyOwnerCanMint
+        - event: OnlyTrustedCanMint(indexed bool)
+          handler: handleOnlyTrustedCanMint
+        - event: OwnerChanged(indexed address,indexed address)
+          handler: handleOwnerChanged
+        - event: Suspended(indexed address)
+          handler: handleSuspended
