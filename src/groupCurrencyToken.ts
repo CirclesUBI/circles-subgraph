@@ -7,7 +7,12 @@ import {
   GroupCurrencyTokenCreated as GroupCurrencyTokenCreatedEvent
 } from './types/GroupCurrencyTokenFactory/GroupCurrencyTokenFactory'
 import {
-  GroupCurrencyToken as GroupCurrencyTokenContract, MemberTokenAdded as MemberTokenAddedEvent
+  GroupCurrencyToken as GroupCurrencyTokenContract,
+  MemberTokenAdded as MemberTokenAddedEvent,
+  OnlyOwnerCanMint as OnlyOwnerCanMintEvent,
+  OnlyTrustedCanMint as OnlyTrustedCanMintEvent,
+  OwnerChanged as OwnerChangedEvent,
+  Suspended as SuspendedEvent,
 } from './types/GroupCurrencyTokenFactory/GroupCurrencyToken'
 import { GroupCurrencyToken, SafeGroupMember } from './types/schema'
 import { GroupCurrencyToken as GroupCurrencyTokenTemplate } from './types/templates'
@@ -77,4 +82,35 @@ export function handleMemberTokenRemoved(event: MemberTokenAddedEvent): void {
   let safeId = event.params._memberToken.toHex()
   let groupMemberId = createSafeGroupMemberId(groupId, safeId)
   store.remove('SafeGroupMember', groupMemberId)
+}
+
+export function handleOnlyOwnerCanMint(event: OnlyOwnerCanMintEvent): void {
+  let groupAddress = event.params._event.address
+  let onlyOwnerCanMint = event.params._onlyOwnerCanMint
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.onlyOwnerCanMint = onlyOwnerCanMint
+  groupCurrencyToken.save()
+}
+
+export function handleOnlyTrustedCanMint(event: OnlyTrustedCanMintEvent): void {
+  let groupAddress = event.params._event.address
+  let onlyTrustedCanMint = event.params._onlyTrustedCanMint
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.onlyTrustedCanMint = onlyTrustedCanMint
+  groupCurrencyToken.save()
+}
+export function handleOwnerChanged(event: OwnerChangedEvent): void {
+  let groupAddress = event.params._event.address
+  let newOwner = event.params._new
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.owner = newOwner.toHexString()
+  groupCurrencyToken.save()
+}
+export function handleSuspended(event: SuspendedEvent): void {
+  let groupAddress = event.params._event.address
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  // @TODO the suspended event only send the owner address data, it'd be better if send the suspended bool
+  let GroupCurrencyTokenContractInstance = GroupCurrencyTokenContract.bind(groupAddress)
+  groupCurrencyToken.suspended = GroupCurrencyTokenContractInstance.suspended()
+  groupCurrencyToken.save()
 }
