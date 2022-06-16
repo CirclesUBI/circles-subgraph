@@ -13,6 +13,7 @@ import {
   OnlyTrustedCanMint as OnlyTrustedCanMintEvent,
   OwnerChanged as OwnerChangedEvent,
   Suspended as SuspendedEvent,
+  Minted as MintedEvent,
 } from './types/GroupCurrencyTokenFactory/GroupCurrencyToken'
 import { GroupCurrencyToken, SafeGroupMember } from './types/schema'
 import { GroupCurrencyToken as GroupCurrencyTokenTemplate } from './types/templates'
@@ -31,6 +32,7 @@ export function createGroupCurrencyTokenIfNonExistent(groupAddress: Address): Gr
     groupCurrencyToken.owner = GroupCurrencyTokenContractInstance.owner().toHexString()
     groupCurrencyToken.treasury = GroupCurrencyTokenContractInstance.treasury().toHexString()
     groupCurrencyToken.mintFeePerThousand = BigInt.fromI32(GroupCurrencyTokenContractInstance.mintFeePerThousand())
+    groupCurrencyToken.minted = new BigInt(0)
     groupCurrencyToken.suspended = GroupCurrencyTokenContractInstance.suspended()
     groupCurrencyToken.onlyOwnerCanMint = GroupCurrencyTokenContractInstance.onlyOwnerCanMint()
     groupCurrencyToken.onlyTrustedCanMint = GroupCurrencyTokenContractInstance.onlyTrustedCanMint()
@@ -99,6 +101,7 @@ export function handleOnlyTrustedCanMint(event: OnlyTrustedCanMintEvent): void {
   groupCurrencyToken.onlyTrustedCanMint = onlyTrustedCanMint
   groupCurrencyToken.save()
 }
+
 export function handleOwnerChanged(event: OwnerChangedEvent): void {
   let groupAddress = event.params._event.address
   let newOwner = event.params._new
@@ -106,11 +109,24 @@ export function handleOwnerChanged(event: OwnerChangedEvent): void {
   groupCurrencyToken.owner = newOwner.toHexString()
   groupCurrencyToken.save()
 }
+
 export function handleSuspended(event: SuspendedEvent): void {
   let groupAddress = event.params._event.address
   let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
   // @TODO the suspended event only send the owner address data, it'd be better if send the suspended bool
   let GroupCurrencyTokenContractInstance = GroupCurrencyTokenContract.bind(groupAddress)
   groupCurrencyToken.suspended = GroupCurrencyTokenContractInstance.suspended()
+  groupCurrencyToken.save()
+}
+
+// @TODO: this event has many information such as: receiver, amount, mintAmount, mintFee
+// amount = mintAmount + mintFee
+// we might want to save some of this piece of information in a different entity?
+// in the meantime we will just save the minted amount (mintAmount)
+export function handleMinted(event: MintedEvent): void {
+  let groupAddress = event.params._event.address
+  let mintAmount = event.params._mintAmount
+  let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.minted = groupCurrencyToken.minted.plus(mintAmount)
   groupCurrencyToken.save()
 }

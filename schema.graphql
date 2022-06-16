@@ -115,6 +115,7 @@ type GroupCurrencyToken @entity {
   owner: String
   treasury: String
   mintFeePerThousand: BigInt
+  minted: BigInt!
   suspended: Boolean
   onlyOwnerCanMint: Boolean
   onlyTrustedCanMint: Boolean
