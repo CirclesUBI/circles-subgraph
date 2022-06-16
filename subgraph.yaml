@@ -118,3 +118,22 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+  - name: GroupCurrencyToken
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      abi: GroupCurrencyToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/groupCurrencyToken.ts
+      entities:
+        - GroupCurrencyToken
+        - Safe
+      abis:
+        - name: GroupCurrencyToken
+          file: ./abis/GroupCurrencyToken.json # TODO: we might need to use this abi from a node_modules
+      eventHandlers:
+        - event: MemberTokenAdded(indexed address)
+          handler: handleMemberTokenAdded

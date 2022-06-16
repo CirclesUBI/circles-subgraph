@@ -18,6 +18,7 @@ type Safe @entity {
   incoming: [Trust!]! @derivedFrom(field: "canSendTo") # All the paths tokens can travel to this user
   outgoingAddresses: [String!]!
   balances: [Balance!]! @derivedFrom(field: "owner")
+  groups: [SafeGroupMember!] @derivedFrom(field: "safe")
 }
 
 type Balance @entity {
@@ -99,8 +100,14 @@ type Notification implements Event @entity {
   ownership: OwnershipChange
 }
 
+type SafeGroupMember @entity {
+  id: ID! # Set to `safe.id.concat(group.id)`
+  safe: Safe!
+  group: GroupCurrencyToken!
+}
+
 type GroupCurrencyToken @entity {
-  id: ID!
+  id: ID! # The address of the Group
   name: String
   symbol: String
   creator: String
@@ -111,4 +118,5 @@ type GroupCurrencyToken @entity {
   suspended: Boolean
   onlyOwnerCanMint: Boolean
   onlyTrustedCanMint: Boolean
+  members: [SafeGroupMember!]! @derivedFrom(field: "group")
 }
