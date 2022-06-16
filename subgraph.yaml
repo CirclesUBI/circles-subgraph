@@ -191,3 +191,5 @@ templates:
           handler: handleOwnerChanged
         - event: Suspended(indexed address)
           handler: handleSuspended
+        - event: Minted(indexed address,uint256,uint256,uint256)
+          handler: handleMinted
