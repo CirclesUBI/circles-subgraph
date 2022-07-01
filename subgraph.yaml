@@ -22,7 +22,7 @@ dataSources:
         - Trust
       abis:
         - name: Hub
-          file: ./node_modules/circles-contracts/build/contracts/Hub.json
+          file: ./node_modules/@circles/circles-contracts/build/contracts/Hub.json
       eventHandlers:
         - event: Signup(indexed address,address)
           handler: handleSignup
@@ -90,9 +90,9 @@ templates:
         - Balance
       abis:
         - name: Token
-          file: ./node_modules/circles-contracts/build/contracts/Token.json
+          file: ./node_modules/@circles/circles-contracts/build/contracts/Token.json
         - name: Hub
-          file: ./node_modules/circles-contracts/build/contracts/Hub.json
+          file: ./node_modules/@circles/circles-contracts/build/contracts/Hub.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
