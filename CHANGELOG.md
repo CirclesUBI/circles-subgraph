@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.2] - 2022-07-08
+
+### Changed
+
+- Update to node v14 [#80](https://github.com/CirclesUBI/circles-subgraph/pull/80)
+
 ## [1.3.1] - 2022-06-10
 
 ### Fixed
