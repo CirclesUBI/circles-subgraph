@@ -58,6 +58,10 @@ enum NotificationType {
   OWNERSHIP
   TRANSFER
   TRUST
+  GROUP_CREATION
+  GROUP_ADD_MEMBER
+  GROUP_REMOVE_MEMBER
+  GROUP_MINT
 }
 
 type TrustChange implements Event @entity {
@@ -87,6 +91,40 @@ type OwnershipChange implements Event @entity {
   removes: String
 }
 
+type GroupCreation implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  group: String
+  creator: String
+  name: String
+}
+
+type GroupMint implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  receiver: String
+  amount: BigInt
+  mintFee: BigInt
+  group: String
+}
+
+type GroupOwnerChange implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  oldOwner: String
+  newOwner: BigInt
+  group: String
+}
+
+type GroupAddMember implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  user: String
+  group: String
+}
+
+type GroupRemoveMember implements Event @entity {
+  id: ID! # Concatenation of block number and log ID
+  user: String
+  group: String
+}
+
 type Notification implements Event @entity {
   id: ID! # Concatenation of notification type, block number and log ID
   safe: Safe
@@ -98,6 +136,11 @@ type Notification implements Event @entity {
   transfer: Transfer
   hubTransfer: HubTransfer
   ownership: OwnershipChange
+  groupCreation: GroupCreation
+  groupMint: GroupMint
+  groupOwnerChange: GroupOwnerChange
+  groupAddMember: GroupAddMember
+  groupRemoveMember: GroupRemoveMember
 }
 
 type SafeGroupMember @entity {
