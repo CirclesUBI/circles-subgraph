@@ -93,9 +93,8 @@ type OwnershipChange implements Event @entity {
 
 type GroupCreation implements Event @entity {
   id: ID! # Concatenation of block number and log ID
-  group: String
+  group: GroupCurrencyToken
   creator: String
-  name: String
 }
 
 type GroupMint implements Event @entity {
@@ -103,26 +102,26 @@ type GroupMint implements Event @entity {
   receiver: String
   amount: BigInt
   mintFee: BigInt
-  group: String
+  group: GroupCurrencyToken
 }
 
 type GroupOwnerChange implements Event @entity {
   id: ID! # Concatenation of block number and log ID
-  oldOwner: String
-  newOwner: BigInt
-  group: String
+  oldOwner: Safe
+  newOwner: Safe
+  group: GroupCurrencyToken
 }
 
 type GroupAddMember implements Event @entity {
   id: ID! # Concatenation of block number and log ID
-  user: String
-  group: String
+  user: Safe
+  group: GroupCurrencyToken
 }
 
 type GroupRemoveMember implements Event @entity {
   id: ID! # Concatenation of block number and log ID
-  user: String
-  group: String
+  user: Safe
+  group: GroupCurrencyToken
 }
 
 type Notification implements Event @entity {
@@ -160,6 +159,7 @@ type GroupCurrencyToken @entity {
   mintFeePerThousand: BigInt
   minted: BigInt!
   suspended: Boolean
+  time: BigInt!
   onlyOwnerCanMint: Boolean
   onlyTrustedCanMint: Boolean
   members: [SafeGroupMember!]! @derivedFrom(field: "group")

@@ -64,6 +64,7 @@ export function handleGroupCurrencyTokenCreation(event: GroupCurrencyTokenCreate
   let groupAddress = event.params._address
   let creator = event.params._deployer.toHexString()
   let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
+  groupCurrencyToken.time = event.block.timestamp
   groupCurrencyToken.creator = creator
   groupCurrencyToken.save()
 
@@ -72,7 +73,6 @@ export function handleGroupCurrencyTokenCreation(event: GroupCurrencyTokenCreate
   let groupCreationEvent = new GroupCreation(eventId)
   groupCreationEvent.creator = creator
   groupCreationEvent.group = groupCurrencyToken.id
-  groupCreationEvent.name = groupCurrencyToken.name
   groupCreationEvent.save()
 
   // Creates Notification for Group Creation event
