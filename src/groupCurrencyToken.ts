@@ -15,7 +15,7 @@ import {
   Suspended as SuspendedEvent,
   Minted as MintedEvent,
 } from './types/GroupCurrencyTokenFactory/GroupCurrencyToken'
-import { GroupAddMember, GroupCreation, GroupCurrencyToken, GroupMint, GroupRemoveMember, Notification, SafeGroupMember } from './types/schema'
+import { GroupAddMember, GroupCreation, GroupCurrencyToken, GroupMint, GroupRemoveMember, Notification, SafeGroupMember, GroupOwnerChange, Safe } from './types/schema'
 import { GroupCurrencyToken as GroupCurrencyTokenTemplate } from './types/templates'
 import { createEventID, createNotificationID } from './utils'
 
@@ -101,7 +101,7 @@ export function handleMemberTokenAdded(event: MemberTokenAddedEvent): void {
   groupAddMemberEvent.group = groupId
   groupAddMemberEvent.save()
 
-  // Creates Notification for Group Creation event
+  // Creates Notification for Group Add Member event
   let notificationId = createNotificationID('group-add-member', event.block.number, event.logIndex)
   let notification = new Notification(notificationId)
   notification.transactionHash = event.transaction.hash.toHexString()
@@ -131,7 +131,7 @@ export function handleMemberTokenRemoved(event: MemberTokenAddedEvent): void {
   groupRemoveMemberEvent.group = groupId
   groupRemoveMemberEvent.save()
 
-  // Creates Notification for Group Creation event
+  // Creates Notification for Group Remove Member event
   let notificationId = createNotificationID('group-remove-member', event.block.number, event.logIndex)
   let notification = new Notification(notificationId)
   notification.transactionHash = event.transaction.hash.toHexString()
@@ -162,10 +162,50 @@ export function handleOnlyTrustedCanMint(event: OnlyTrustedCanMintEvent): void {
 
 export function handleOwnerChanged(event: OwnerChangedEvent): void {
   let groupAddress = event.params._event.address
-  let newOwner = event.params._new
+  let newOwner = event.params._new.toHexString()
   let groupCurrencyToken = createGroupCurrencyTokenIfNonExistent(groupAddress)
-  groupCurrencyToken.owner = newOwner.toHexString()
+  let oldOwner = groupCurrencyToken.owner
+  groupCurrencyToken.owner = newOwner
   groupCurrencyToken.save()
+
+  // Creates Group Owner Change event
+  let eventId = createEventID(event.block.number, event.logIndex)
+  let groupOwnerChangeEvent = new GroupOwnerChange(eventId)
+  groupOwnerChangeEvent.oldOwner = oldOwner
+  groupOwnerChangeEvent.newOwner = newOwner
+  groupOwnerChangeEvent.group = groupAddress.toHexString()
+  groupOwnerChangeEvent.save()
+
+  // Creates Notifications for Group Owner Change event when safe exists
+  if (oldOwner) {
+    let safe = Safe.load(oldOwner)
+    if (safe) {
+      let oldOwnerNotificationId = createNotificationID('group-owner-change-old', event.block.number, event.logIndex)
+      let oldOwnerNotification = new Notification(oldOwnerNotificationId)
+      oldOwnerNotification.transactionHash = event.transaction.hash.toHexString()
+      oldOwnerNotification.safeAddress = oldOwner
+      oldOwnerNotification.safe = oldOwner
+      oldOwnerNotification.type = 'GROUP_OWNER_CHANGE'
+      oldOwnerNotification.time = event.block.timestamp
+      oldOwnerNotification.groupOwnerChange = eventId
+      oldOwnerNotification.save()
+    }
+  }
+
+  // // Creates Notification for Group Creation event when safe exists
+  let safe = Safe.load(newOwner)
+  if (safe) {
+    let newOwnerNotificationId = createNotificationID('group-owner-change-new', event.block.number, event.logIndex)
+    let newOwnerNotification = new Notification(newOwnerNotificationId)
+    newOwnerNotification.transactionHash = event.transaction.hash.toHexString()
+
+    newOwnerNotification.safeAddress = newOwner
+    newOwnerNotification.safe = newOwner
+    newOwnerNotification.type = 'GROUP_OWNER_CHANGE'
+    newOwnerNotification.time = event.block.timestamp
+    newOwnerNotification.groupOwnerChange = eventId
+    newOwnerNotification.save()
+  }
 }
 
 export function handleSuspended(event: SuspendedEvent): void {
