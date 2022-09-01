@@ -62,6 +62,7 @@ enum NotificationType {
   GROUP_ADD_MEMBER
   GROUP_REMOVE_MEMBER
   GROUP_MINT
+  GROUP_OWNER_CHANGE
 }
 
 type TrustChange implements Event @entity {
@@ -107,8 +108,8 @@ type GroupMint implements Event @entity {
 
 type GroupOwnerChange implements Event @entity {
   id: ID! # Concatenation of block number and log ID
-  oldOwner: Safe
-  newOwner: Safe
+  oldOwner: String
+  newOwner: String
   group: GroupCurrencyToken
 }
 
