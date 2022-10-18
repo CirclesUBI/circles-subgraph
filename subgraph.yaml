@@ -75,6 +75,8 @@ templates:
           handler: handleAddedOwner
         - event: RemovedOwner(address)
           handler: handleRemovedOwner
+        - event: SafeSetup(indexed address,address[],uint256,address,address)
+          handler: handleSafeSetup
   - name: Token
     kind: ethereum/contract
     network: ${SUBGRAPH_NETWORK}
