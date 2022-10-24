@@ -7,7 +7,7 @@ import {
   RemovedOwner as RemovedOwnerEvent,
   SafeSetup as SafeSetupEvent
 
-} from './types/templates/GnosisSafe/gnosis130'
+} from './types/templates/GnosisSafe/GnosisSafe'
 
 import {
   Notification,
@@ -20,6 +20,9 @@ import {
   createEventID,
   createNotificationID,
 } from './utils'
+
+
+import{ log } from '@graphprotocol/graph-ts'   
 
 export function handleAddedOwner(event: AddedOwnerEvent): void {
   let user = User.load(event.params.owner.toHexString())
@@ -99,43 +102,12 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
   notification.ownership = createEventID(event.block.number, event.logIndex)
   notification.save()
 }
-
 export function handleSafeSetup(event: SafeSetupEvent): void {
-  let user = User.load(event.params.owners.toString())
-  console.log(user)
-  if (user) {
-    let safes = user.safes
-    safes.push(event.address.toHexString())
-    user.safes = safes
-    let safeAddresses = user.safeAddresses
-    if (safeAddresses == null){
-      safeAddresses = new Array<string>()
-    }
-    safeAddresses.push(event.address.toHexString())
-    user.safeAddresses = safeAddresses
-  } else {
-    user = new User(event.params.owners.toString())
-    user.safes = [event.address.toHexString()]
-    user.safeAddresses = [event.address.toHexString()]
-  }
-  user.save()
+  for (var i = 0; i < event.params.owners.length; i++){
+    log.debug('Threshhold {}', [event.params.owners[i].toHexString()])
 
-  let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
-  ownership.adds = event.params.owners.toString()
-  ownership.save()
-
-  let notification = new Notification(
-    createNotificationID(
-      'ownership',
-      event.block.number,
-      event.logIndex
-    )
-  )
-  notification.transactionHash = event.transaction.hash.toHexString()
-  notification.safeAddress = event.address.toHexString()
-  notification.safe = event.address.toHexString()
-  notification.type = 'OWNERSHIP'
-  notification.time = event.block.timestamp
-  notification.ownership = createEventID(event.block.number, event.logIndex)
-  notification.save()
 }
+  // let safe = Safe.load(event.params.owners.toString())
+  // safe?.save()
+}
+

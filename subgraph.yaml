@@ -49,9 +49,9 @@ dataSources:
         - Safe
       abis:
         - name: ProxyFactory
-          file: ./node_modules/@circles/safe-contracts/build/contracts/ProxyFactory.json
+          file: ./node_modules/@gnosis.pm/safe-contracts/build/artifacts/contracts/proxies/GnosisSafeProxyFactory.sol/GnosisSafeProxyFactory.json
       eventHandlers:
-        - event: ProxyCreation(address)
+        - event: ProxyCreation(address,address)
           handler: handleProxyCreation
 templates:
   - name: GnosisSafe
@@ -69,7 +69,7 @@ templates:
         - User
       abis:
         - name: GnosisSafe
-          file: ./node_modules/@circles/safe-contracts/build/contracts/GnosisSafe.json
+          file: ./node_modules/@gnosis.pm/safe-contracts/build/artifacts/contracts/GnosisSafe.sol/GnosisSafe.json
       eventHandlers:
         - event: AddedOwner(address)
           handler: handleAddedOwner
