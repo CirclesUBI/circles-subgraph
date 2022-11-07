@@ -104,10 +104,26 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
 }
 export function handleSafeSetup(event: SafeSetupEvent): void {
   for (var i = 0; i < event.params.owners.length; i++){
-    log.debug('Threshhold {}', [event.params.owners[i].toHexString()])
-
+    log.debug('address owner {}', [event.params.owners[i].toHexString()])
+    log.debug(' adddress', [event.address.toHexString()])
+    let user= User.load(event.params.owners[i].toHexString())
+    if (user) {
+      let safes = user.safes
+      safes.push(event.address.toHexString())
+      user.safes = safes
+      let safeAddresses = user.safeAddresses
+      if (safeAddresses == null){
+        safeAddresses = new Array<string>()
+      }
+      safeAddresses.push(event.address.toHexString())
+      user.safeAddresses=safeAddresses
+    } else{
+      user = new User(event.params.owners[i].toHexString())
+      user.safes = [event.address.toHexString()]
+      user.safeAddresses = [event.address.toHexString()]
+      log.debug('user - safes {}', user.safes)
+    }
+    user.save()
 }
-  // let safe = Safe.load(event.params.owners.toString())
-  // safe?.save()
 }
 
