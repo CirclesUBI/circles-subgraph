@@ -102,6 +102,7 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
   notification.ownership = createEventID(event.block.number, event.logIndex)
   notification.save()
 }
+
 export function handleSafeSetup(event: SafeSetupEvent): void {
   for (var i = 0; i < event.params.owners.length; i++){
     log.debug('address owner {}', [event.params.owners[i].toHexString()])
@@ -124,6 +125,5 @@ export function handleSafeSetup(event: SafeSetupEvent): void {
       log.debug('user - safes {}', user.safes)
     }
     user.save()
+  }
 }
-}
-
