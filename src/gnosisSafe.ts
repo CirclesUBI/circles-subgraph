@@ -125,24 +125,24 @@ export function handleSafeSetup(event: SafeSetupEvent): void {
       log.debug('user - safes {}', user.safes)
     }
     user.save()
-  }
 
-  let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
-  ownership.adds = event.params.owner.toHexString()
-  ownership.save()
+    let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
+    ownership.adds = event.params.owners[i].toHexString()
+    ownership.save()
 
-  let notification = new Notification(
-    createNotificationID(
-      'ownership',
-      event.block.number,
-      event.logIndex
+    let notification = new Notification(
+      createNotificationID(
+        'ownership',
+        event.block.number,
+        event.logIndex
+      )
     )
-  )
-  notification.transactionHash = event.transaction.hash.toHexString()
-  notification.safeAddress = event.address.toHexString()
-  notification.safe = event.address.toHexString()
-  notification.type = 'OWNERSHIP'
-  notification.time = event.block.timestamp
-  notification.ownership = createEventID(event.block.number, event.logIndex)
-  notification.save()
+    notification.transactionHash = event.transaction.hash.toHexString()
+    notification.safeAddress = event.address.toHexString()
+    notification.safe = event.address.toHexString()
+    notification.type = 'OWNERSHIP'
+    notification.time = event.block.timestamp
+    notification.ownership = createEventID(event.block.number, event.logIndex)
+    notification.save()
+  }
 }
