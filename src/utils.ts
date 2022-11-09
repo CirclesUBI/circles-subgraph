@@ -27,8 +27,8 @@ export function createBalanceID(token: Address, holder: Address): string {
 }
 
 export function manageAddOwnership(
-  owner: Address,
-  safe: Address,
+  owner: string,
+  safe: string,
   transaction: string,
   blockNumber: BigInt,
   logIndex: BigInt,

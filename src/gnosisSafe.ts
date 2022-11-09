@@ -6,7 +6,6 @@ import {
   AddedOwner as AddedOwnerEvent,
   RemovedOwner as RemovedOwnerEvent,
   SafeSetup as SafeSetupEvent
-
 } from './types/templates/GnosisSafe/GnosisSafe'
 
 import {
