@@ -20,7 +20,6 @@ import {
   manageAddOwnership,
 } from './utils'
 
-
 export function handleAddedOwner(event: AddedOwnerEvent): void {
   let user = User.load(event.params.owner.toHexString())
   if (user) {
