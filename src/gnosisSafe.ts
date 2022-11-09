@@ -19,10 +19,9 @@ import {
 import {
   createEventID,
   createNotificationID,
+  manageOwnership,
 } from './utils'
 
-
-import{ log } from '@graphprotocol/graph-ts'   
 
 export function handleAddedOwner(event: AddedOwnerEvent): void {
   let user = User.load(event.params.owner.toHexString())
@@ -42,25 +41,7 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
     user.safeAddresses = [event.address.toHexString()]
   }
   user.save()
-
-  let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
-  ownership.adds = event.params.owner.toHexString()
-  ownership.save()
-
-  let notification = new Notification(
-    createNotificationID(
-      'ownership',
-      event.block.number,
-      event.logIndex
-    )
-  )
-  notification.transactionHash = event.transaction.hash.toHexString()
-  notification.safeAddress = event.address.toHexString()
-  notification.safe = event.address.toHexString()
-  notification.type = 'OWNERSHIP'
-  notification.time = event.block.timestamp
-  notification.ownership = createEventID(event.block.number, event.logIndex)
-  notification.save()
+  manageOwnership(event.params.owner.toHexString(),event.address.toHexString() , event.transaction.hash.toHexString(),event.block.number,event.logIndex, event.block.timestamp)
 }
 
 export function handleRemovedOwner(event: RemovedOwnerEvent): void {
@@ -105,8 +86,6 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
 
 export function handleSafeSetup(event: SafeSetupEvent): void {
   for (var i = 0; i < event.params.owners.length; i++){
-    log.debug('address owner {}', [event.params.owners[i].toHexString()])
-    log.debug(' adddress', [event.address.toHexString()])
     let user = User.load(event.params.owners[i].toHexString())
     if (user) {
       let safes = user.safes
@@ -122,27 +101,8 @@ export function handleSafeSetup(event: SafeSetupEvent): void {
       user = new User(event.params.owners[i].toHexString())
       user.safes = [event.address.toHexString()]
       user.safeAddresses = [event.address.toHexString()]
-      log.debug('user - safes {}', user.safes)
     }
     user.save()
-
-    let ownership = new OwnershipChange(createEventID(event.block.number, event.logIndex))
-    ownership.adds = event.params.owners[i].toHexString()
-    ownership.save()
-
-    let notification = new Notification(
-      createNotificationID(
-        'ownership',
-        event.block.number,
-        event.logIndex
-      )
-    )
-    notification.transactionHash = event.transaction.hash.toHexString()
-    notification.safeAddress = event.address.toHexString()
-    notification.safe = event.address.toHexString()
-    notification.type = 'OWNERSHIP'
-    notification.time = event.block.timestamp
-    notification.ownership = createEventID(event.block.number, event.logIndex)
-    notification.save()
+    manageOwnership(event.params.owners[i].toHexString(),event.address.toHexString() , event.transaction.hash.toHexString(),event.block.number,event.logIndex, event.block.timestamp)
   }
 }
