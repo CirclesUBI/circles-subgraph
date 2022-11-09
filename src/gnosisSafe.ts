@@ -12,14 +12,13 @@ import {
 import {
   Notification,
   OwnershipChange,
-  Safe,
   User,
 } from './types/schema'
 
 import {
   createEventID,
   createNotificationID,
-  manageOwnership,
+  manageAddOwnership,
 } from './utils'
 
 
@@ -41,7 +40,14 @@ export function handleAddedOwner(event: AddedOwnerEvent): void {
     user.safeAddresses = [event.address.toHexString()]
   }
   user.save()
-  manageOwnership(event.params.owner.toHexString(),event.address.toHexString() , event.transaction.hash.toHexString(),event.block.number,event.logIndex, event.block.timestamp)
+  manageAddOwnership(
+    event.params.owner.toHexString(),
+    event.address.toHexString(),
+    event.transaction.hash.toHexString(),
+    event.block.number,
+    event.logIndex,
+    event.block.timestamp,
+  )
 }
 
 export function handleRemovedOwner(event: RemovedOwnerEvent): void {
@@ -103,6 +109,13 @@ export function handleSafeSetup(event: SafeSetupEvent): void {
       user.safeAddresses = [event.address.toHexString()]
     }
     user.save()
-    manageOwnership(event.params.owners[i].toHexString(),event.address.toHexString() , event.transaction.hash.toHexString(),event.block.number,event.logIndex, event.block.timestamp)
+    manageAddOwnership(
+      event.params.owners[i].toHexString(),
+      event.address.toHexString(),
+      event.transaction.hash.toHexString(),
+      event.block.number,
+      event.logIndex,
+      event.block.timestamp,
+    )
   }
 }

@@ -2,7 +2,7 @@ import {
   Address,
   BigInt,
 } from '@graphprotocol/graph-ts'
-import { OwnershipChange, Notification} from './types/schema'
+import { OwnershipChange, Notification } from './types/schema'
 
 export function createTrustID(token: Address, user: Address, canSendTo: Address): string {
   return token.toHexString().concat('-').concat(user.toHexString().concat('-').concat(canSendTo.toHexString()))
@@ -26,7 +26,14 @@ export function createBalanceID(token: Address, holder: Address): string {
   return token.toHexString().concat('-').concat(holder.toHexString())
 }
 
-export function manageOwnership(owner: string, safe: string, transaction: string, blockNumber: BigInt, logIndex: BigInt, blocktimestap: BigInt): void {
+export function manageAddOwnership(
+  owner: Address,
+  safe: Address,
+  transaction: string,
+  blockNumber: BigInt,
+  logIndex: BigInt,
+  blocktimestap: BigInt,
+): void {
   let ownership = new OwnershipChange(createEventID(blockNumber, logIndex))
   ownership.adds = owner
   ownership.save()
