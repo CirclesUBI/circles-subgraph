@@ -1,5 +1,4 @@
-FROM node:12-slim
-
+FROM node:16-bullseye-slim as base
 WORKDIR /usr/src/subgraph
 
 # Install dependencies
