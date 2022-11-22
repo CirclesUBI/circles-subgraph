@@ -49,6 +49,27 @@ dataSources:
         - Safe
       abis:
         - name: ProxyFactory
+          file: ./node_modules/@gnosis.pm/safe-contracts/build/artifacts/contracts/proxies/GnosisSafeProxyFactory.sol/GnosisSafeProxyFactory.json
+      eventHandlers:
+        - event: ProxyCreation(address,address)
+          handler: handleProxyCreation
+  - name: ProxyFactoryCRC
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      address: "${PROXY_FACTORY_ADDRESS_CRC}"
+      abi: ProxyFactory
+      startBlock: ${START_BLOCK}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/proxyFactoryCRC.ts
+      entities:
+        - ProxyCreation
+        - Safe
+      abis:
+        - name: ProxyFactory
           file: ./node_modules/@circles/safe-contracts/build/contracts/ProxyFactory.json
       eventHandlers:
         - event: ProxyCreation(address)
@@ -64,6 +85,29 @@ templates:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/gnosisSafe.ts
+      entities:
+        - Safe
+        - User
+      abis:
+        - name: GnosisSafe
+          file: ./node_modules/@gnosis.pm/safe-contracts/build/artifacts/contracts/GnosisSafe.sol/GnosisSafe.json
+      eventHandlers:
+        - event: AddedOwner(address)
+          handler: handleAddedOwner
+        - event: RemovedOwner(address)
+          handler: handleRemovedOwner
+        - event: SafeSetup(indexed address,address[],uint256,address,address)
+          handler: handleSafeSetup
+  - name: GnosisSafeCRC
+    kind: ethereum/contract
+    network: ${SUBGRAPH_NETWORK}
+    source:
+      abi: GnosisSafe
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/gnosisSafeCRC.ts
       entities:
         - Safe
         - User

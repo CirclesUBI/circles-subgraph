@@ -5,8 +5,7 @@ import {
 import {
   AddedOwner as AddedOwnerEvent,
   RemovedOwner as RemovedOwnerEvent,
-  SafeSetup as SafeSetupEvent
-} from './types/templates/GnosisSafe/GnosisSafe'
+} from './types/templates/GnosisSafeCRC/GnosisSafe'
 
 import {
   Notification,
@@ -86,34 +85,4 @@ export function handleRemovedOwner(event: RemovedOwnerEvent): void {
   notification.time = event.block.timestamp
   notification.ownership = createEventID(event.block.number, event.logIndex)
   notification.save()
-}
-
-export function handleSafeSetup(event: SafeSetupEvent): void {
-  for (var i = 0; i < event.params.owners.length; i++){
-    let user = User.load(event.params.owners[i].toHexString())
-    if (user) {
-      let safes = user.safes
-      safes.push(event.address.toHexString())
-      user.safes = safes
-      let safeAddresses = user.safeAddresses
-      if (safeAddresses == null){
-        safeAddresses = new Array<string>()
-      }
-      safeAddresses.push(event.address.toHexString())
-      user.safeAddresses = safeAddresses
-    } else{
-      user = new User(event.params.owners[i].toHexString())
-      user.safes = [event.address.toHexString()]
-      user.safeAddresses = [event.address.toHexString()]
-    }
-    user.save()
-    manageAddOwnership(
-      event.params.owners[i].toHexString(),
-      event.address.toHexString(),
-      event.transaction.hash.toHexString(),
-      event.block.number,
-      event.logIndex,
-      event.block.timestamp,
-    )
-  }
 }
