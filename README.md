@@ -50,6 +50,9 @@ Circles subgraph for [`The Graph`] to fastly query available data in the Circles
 [`the graph`]: https://thegraph.com
 [`explorer`]: https://thegraph.com/explorer/subgraph/circlesubi/circles
 
+
+⚠️ if you try to deploy in the hosted-service, this does not support version control, so from the script deploy.sh remove the --version_label and run `npm run deploy` 
+
 ## Development
 
 ```bash
