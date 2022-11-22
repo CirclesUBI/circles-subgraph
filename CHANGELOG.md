@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2022-11-22
+
+### Changed 
+
+- Add safeSetup event from Gnosis Safe Contract v1.3.0  [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84)
+- Enable indexing of Gnosis Safe Contracts v1.1.1+CRC and v1.3.0 versions [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84) 
+    
+### Changed
+
 ## [1.3.2] - 2022-07-08
 
 ### Changed
