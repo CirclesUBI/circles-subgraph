@@ -21,18 +21,16 @@ jobs:
           doctl auth init -t ${{ secrets.CIRCLES_CI_DO_TOKEN }}
 
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get ref
-        id: parse_ref
-        run: |
-          echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+        run: echo "RELEASE_VERSION=${GITHUB_REF/refs\/tags\//}">> $GITHUB_ENV
 
       - name: Digital Ocean Registry login
         run: |
@@ -44,6 +42,6 @@ jobs:
           context: .
           push: true
           tags: |
-            registry.digitalocean.com/circles-registry/circles-subgraph:${{ steps.parse_ref.outputs.tag }}
+            registry.digitalocean.com/circles-registry/circles-subgraph:${{ env.RELEASE_VERSION }}
             joincircles/circles-subgraph:latest
-            joincircles/circles-subgraph:${{ steps.parse_ref.outputs.tag }}
+            joincircles/circles-subgraph:${{ env.RELEASE_VERSION }}
