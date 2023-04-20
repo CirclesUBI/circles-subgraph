@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2023-04-20
+
+### Changed
+
+- Update dependencies and update Node version 16 [#96](https://github.com/CirclesUBI/circles-subgraph/pull/96)
+
 ## [1.4.0] - 2022-11-22
 
-### Changed 
+### Changed
 
-- Add safeSetup event from Gnosis Safe Contract v1.3.0  [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84)
-- Enable indexing of Gnosis Safe Contracts v1.1.1+CRC and v1.3.0 versions [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84) 
-    
+- Add safeSetup event from Gnosis Safe Contract v1.3.0 [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84)
+- Enable indexing of Gnosis Safe Contracts v1.1.1+CRC and v1.3.0 versions [#84](https://github.com/CirclesUBI/circles-subgraph/pull/84)
+
 ### Changed
 
 ## [1.3.2] - 2022-07-08
@@ -32,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Removed jq from common.sh  [#73](https://github.com/CirclesUBI/circles-subgraph/pull/73)
+- Removed jq from common.sh [#73](https://github.com/CirclesUBI/circles-subgraph/pull/73)
 
 ### Changed
 
