@@ -9,7 +9,7 @@ RUN apt-get update \
 COPY . .
 
 # Install NodeJS dependencies
-RUN npm ci
+RUN npm ci --no-audit
 
 # Copy runtime script to root
 COPY scripts/run.sh .
