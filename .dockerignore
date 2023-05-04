@@ -1,0 +1,6 @@
+.*
+!.subgraph.tmp.yaml
+node_modules
+build
+src/types
+*.md

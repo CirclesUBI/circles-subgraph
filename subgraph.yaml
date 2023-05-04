@@ -1,4 +1,4 @@
-specVersion: 0.0.3
+specVersion: 0.0.4
 description: Circles subgraph for The Graph to fastly query available data in the Circles UBI ecosystem
 repository: https://github.com/CirclesUBI/circles-subgraph
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/hub.ts
       entities:
@@ -41,7 +41,7 @@ dataSources:
       startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/proxyFactory.ts
       entities:
@@ -62,7 +62,7 @@ dataSources:
       startBlock: ${START_BLOCK}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/proxyFactoryCRC.ts
       entities:
@@ -82,7 +82,7 @@ templates:
       abi: GnosisSafe
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/gnosisSafe.ts
       entities:
@@ -105,7 +105,7 @@ templates:
       abi: GnosisSafe
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/gnosisSafeCRC.ts
       entities:
@@ -126,7 +126,7 @@ templates:
       abi: Token
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/token.ts
       entities:
