@@ -7,9 +7,9 @@
     "codegen": "./scripts/codegen.sh",
     "create": "./scripts/create.sh",
     "deploy": "./scripts/deploy.sh",
-    "start": "npm run codegen && npm run build && npm run create && npm run deploy",
-    "prepare:xdai": "cp .env-xdai .env",
-    "prepare:poa-sokol": "cp .env-poa-sokol .env"
+    "start": "./scripts/run.sh",
+    "prepare:xdai": "cp .env-xdai.example .env",
+    "prepare:poa-sokol": "cp .env-poa-sokol.example .env"
   },
   "repository": {
     "type": "git",
