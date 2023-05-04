@@ -5,6 +5,7 @@
 # Custom build
 .subgraph.tmp.yaml
 .env*
+!*.example
 
 # Graph cli generated
 src/types
