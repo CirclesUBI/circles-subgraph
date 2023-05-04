@@ -21,9 +21,14 @@ export_env() {
 
 # Export subgraph version from package.json
 get_version() {
-  if [ -f "$package_json_file" ]; then
+  if [ "$IS_HOSTED_SERVICE" == "true" ];
+  then
+    SUBGRAPH_VERSION_CMD=""
+  elif [ -f "$package_json_file" ];
+  then
     set -a
-    SUBGRAPH_VERSION=v$(grep -A0 "version" $package_json_file |  awk -F\" '{print $4}')
+    SUBGRAPH_VERSION_CMD=v$(grep -A0 "version" $package_json_file |  awk -F\" '{print $4}')
+    SUBGRAPH_VERSION_CMD="--version-label $SUBGRAPH_VERSION_CMD"
   fi
 }
 
