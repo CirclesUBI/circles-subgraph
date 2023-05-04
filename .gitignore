@@ -4,9 +4,7 @@
 
 # Custom build
 .subgraph.tmp.yaml
-.env
-.env-xdai
-.env-poa-sokol
+.env*
 
 # Graph cli generated
 src/types

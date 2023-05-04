@@ -48,19 +48,8 @@ clear_manifest() {
 exec_graph() {
   exec_args=""
 
-  debug_flag=""
-  access_token=""
-
   if ! [ -z "$2" ]; then
     exec_args=" $2"
-  fi
-
-  if [ "$IS_DEBUG" == "true" ]; then
-    debug_flag=" --debug"
-  fi
-
-  if ! [ -z "$ACCESS_TOKEN" ]; then
-    access_token=" --access-token $ACCESS_TOKEN"
   fi
 
   # Build graph arguments
@@ -72,8 +61,6 @@ exec_graph() {
   if [ -f "$manifest_tmp_file" ]; then
     args="$args $manifest_tmp_file"
   fi
-
-  args="$args$debug_flag$access_token"
 
   # Execute graph command
   echo "graph $args"
