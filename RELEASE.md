@@ -18,9 +18,8 @@ Use this checklist to create a new release of `circles-subgraph` and deploy the 
 
 1. Go to your "The Graph" dashboard at https://thegraph.com/hosted-service/dashboard.
 2. Copy your _Access Token_ from the dashboard (or ask someone in the team).
-3. Then you can prepare the configuration for the `.env-xdai` or `.env-poa-sokol` files by running:
+3. Then you can prepare the configuration for the `.env-xdai`  files by running:
    ```bash
    npm run prepare:xdai
-   npm run prepare:poa-sokol
    ```
 4. Run `npm run codegen`, `npm run build` and `npm run deploy` to deploy the subgraph.
