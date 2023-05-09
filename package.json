@@ -12,7 +12,6 @@
     "deploy": "./scripts/deploy.sh",
     "start": "./scripts/run.sh",
     "prepare:xdai": "cp .env-xdai.example .env",
-    "prepare:poa-sokol": "cp .env-poa-sokol.example .env"
   },
   "repository": {
     "type": "git",
