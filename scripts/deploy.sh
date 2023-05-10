@@ -13,7 +13,7 @@ get_version
 build_manifest
 
 # Deploy graph
-exec_graph deploy "$SUBGRAPH_NAME --ipfs $IPFS_NODE_ENDPOINT --node $GRAPH_ADMIN_NODE_ENDPOINT --deploy-key $ACCESS_TOKEN $SUBGRAPH_VERSION_CMD"
+exec_graph deploy "$SUBGRAPH_NAME --ipfs $IPFS_NODE_ENDPOINT --node $GRAPH_ADMIN_NODE_ENDPOINT  $SUBGRAPH_VERSION_CMD"
 
 # Cleanup
 clear_manifest

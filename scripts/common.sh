@@ -52,11 +52,17 @@ clear_manifest() {
 # Helper method to run graph-cli commands
 exec_graph() {
   exec_args=""
+  access_token=""
 
   if ! [ -z "$2" ]; then
     exec_args=" $2"
   fi
-
+ 
+if [ "$IS_HOSTED_SERVICE" == "true" ];then
+  access_token=" --access-token $ACCESS_TOKEN"
+else
+  access_token=""
+fi
   # Build graph arguments
   exec_command=$1
 
@@ -68,6 +74,6 @@ exec_graph() {
   fi
 
   # Execute graph command
-  echo "graph $args"
+  echo "graph $args$access_token"
   ./node_modules/.bin/graph $args
 }
