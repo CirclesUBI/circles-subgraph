@@ -32,6 +32,13 @@ get_version() {
   fi
 }
 
+# Export token correct params
+get_token() {
+  if [ "$ACCESS_TOKEN" ]; then
+    ACCESS_TOKEN_CMD="$1 $ACCESS_TOKEN"
+  fi
+}
+
 # Create subgraph manifest file with env variables
 build_manifest() {
   if ! [ -f "$manifest_file" ]; then

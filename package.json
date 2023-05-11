@@ -11,7 +11,7 @@
     "create": "./scripts/create.sh",
     "deploy": "./scripts/deploy.sh",
     "start": "./scripts/run.sh",
-    "prepare:xdai": "cp .env-xdai.example .env",
+    "prepare:xdai": "cp .env-xdai.example .env"
   },
   "repository": {
     "type": "git",
