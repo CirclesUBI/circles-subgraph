@@ -32,6 +32,13 @@ get_version() {
   fi
 }
 
+# Export token correct params
+get_token() {
+  if [ "$ACCESS_TOKEN" ]; then
+    ACCESS_TOKEN_CMD="$1 $ACCESS_TOKEN"
+  fi
+}
+
 # Create subgraph manifest file with env variables
 build_manifest() {
   if ! [ -f "$manifest_file" ]; then
@@ -52,17 +59,11 @@ clear_manifest() {
 # Helper method to run graph-cli commands
 exec_graph() {
   exec_args=""
-  access_token=""
 
   if ! [ -z "$2" ]; then
     exec_args=" $2"
   fi
- 
-if [ "$IS_HOSTED_SERVICE" == "true" ];then
-  access_token=" --access-token $ACCESS_TOKEN"
-else
-  access_token=""
-fi
+
   # Build graph arguments
   exec_command=$1
 
@@ -74,6 +75,6 @@ fi
   fi
 
   # Execute graph command
-  echo "graph $args$access_token"
+  echo "graph $args"
   ./node_modules/.bin/graph $args
 }
